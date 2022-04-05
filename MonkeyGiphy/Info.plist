@@ -4,6 +4,8 @@
 <dict>
 	<key>API_KEY</key>
 	<string>Zz7XnA0RZzJJetQAQv1e2c7ErivA9F5u</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>Save gif to Camera Roll</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

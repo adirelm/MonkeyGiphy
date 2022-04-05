@@ -27,9 +27,9 @@ struct PostManager {
     
     
     func fetchPhotos(query: String) {
-                guard let apiKey = Bundle.main.infoDictionary?["API_KEY"] as? String else {
-                    return
-                }
+        guard let apiKey = Bundle.main.infoDictionary?["API_KEY"] as? String else {
+            return
+        }
         let urlString = "https://api.giphy.com/v1/gifs/search?api_key=\(apiKey)&q=\(query)"
         guard let url = URL(string: urlString) else {
             return

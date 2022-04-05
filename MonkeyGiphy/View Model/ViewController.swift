@@ -7,6 +7,7 @@
 
 import UIKit
 import AVFAudio
+import Photos
 
 class ViewController: UIViewController, UISearchBarDelegate {
     
@@ -78,7 +79,6 @@ class ViewController: UIViewController, UISearchBarDelegate {
             songPlayer?.play()
         }
     }
-    
     
     
 }
@@ -165,7 +165,20 @@ extension ViewController: UICollectionViewDataSource, MyTableViewDelegate {
         
     }
     
-    
+    func saveToGalleryButton(with data: Data) {
+        let refreshAlert = UIAlertController(title: "Yay!", message: "Gif saved to Camera Roll!", preferredStyle: UIAlertController.Style.alert)
+        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+
+        PHPhotoLibrary.shared().performChanges({
+            let request = PHAssetCreationRequest.forAsset()
+            request.addResource(with: .photo, data: data, options: nil)
+        }) { (success, error) in
+            if error == nil {
+                return
+            }
+        }
+        present(refreshAlert, animated: true, completion: nil)
+    }
 }
 
 

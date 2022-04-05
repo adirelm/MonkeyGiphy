@@ -34,6 +34,17 @@
                             <action selector="shareImageButton:" destination="gTV-IL-0wX" eventType="touchUpInside" id="EY7-On-h2h"/>
                         </connections>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pdl-Qm-MWa">
+                        <rect key="frame" x="4" y="174" width="47" height="31"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="tinted" image="photo.on.rectangle" catalog="system" title=" ">
+                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large" weight="bold"/>
+                        </buttonConfiguration>
+                        <connections>
+                            <action selector="saveToGalleryButton:" destination="gTV-IL-0wX" eventType="touchUpInside" id="ITv-gw-JHG"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
@@ -47,10 +58,11 @@
             <connections>
                 <outlet property="imageView" destination="sv2-Jl-TlL" id="2Qt-y7-Zk5"/>
             </connections>
-            <point key="canvasLocation" x="171.01449275362319" y="157.03125"/>
+            <point key="canvasLocation" x="169.56521739130437" y="157.03125"/>
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="photo.on.rectangle" catalog="system" width="128" height="97"/>
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
     </resources>
 </document>

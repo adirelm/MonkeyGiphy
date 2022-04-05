@@ -11,6 +11,7 @@ import SwiftGifOrigin
 
 protocol MyTableViewDelegate: AnyObject {
     func shareImageButton(with data: Data )
+    func saveToGalleryButton(with data: Data)
 }
 
 
@@ -67,7 +68,12 @@ class GifCollectionViewCell: UICollectionViewCell {
     @IBAction func shareImageButton(_ sender: UIButton) {
         delegate?.shareImageButton(with: self.data!)
     }
-        
+    
+    
+    @IBAction func saveToGalleryButton(_ sender: UIButton) {
+        delegate?.saveToGalleryButton(with: self.data!)
+    }
+    
 
     static func nib() -> UINib {
         return UINib(nibName: "GifCollectionViewCell", bundle: nil)
