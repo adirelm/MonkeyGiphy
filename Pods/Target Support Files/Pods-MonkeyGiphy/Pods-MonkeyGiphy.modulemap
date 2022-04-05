@@ -1,0 +1,6 @@
+framework module Pods_MonkeyGiphy {
+  umbrella header "Pods-MonkeyGiphy-umbrella.h"
+
+  export *
+  module * { export * }
+}

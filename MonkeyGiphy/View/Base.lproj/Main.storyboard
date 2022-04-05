@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="C7o-QX-z80">
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--🐵 MonkeyGiphy-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MonkeyGiphy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleAspectFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="MVa-Qf-2Fu">
+                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
+                                <subviews>
+                                    <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="D2W-mr-9e3">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="123"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </searchBar>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="kpE-py-5Vg">
+                                        <rect key="frame" x="0.0" y="123" width="414" height="685"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="KJ6-ti-rsc">
+                                            <size key="itemSize" width="414" height="172"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="RdW-wd-aGn">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="172"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Fl6-lp-tYb">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="172"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </collectionViewCellContentView>
+                                                <size key="customSize" width="414" height="172"/>
+                                            </collectionViewCell>
+                                        </cells>
+                                    </collectionView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="D2W-mr-9e3" firstAttribute="leading" secondItem="MVa-Qf-2Fu" secondAttribute="leading" id="0G6-iD-L7w"/>
+                                    <constraint firstAttribute="trailing" secondItem="kpE-py-5Vg" secondAttribute="trailing" id="8td-lt-HP0"/>
+                                    <constraint firstItem="D2W-mr-9e3" firstAttribute="top" secondItem="MVa-Qf-2Fu" secondAttribute="top" id="VUz-e3-KQR"/>
+                                    <constraint firstAttribute="trailing" secondItem="D2W-mr-9e3" secondAttribute="trailing" id="efL-TC-9Qv"/>
+                                    <constraint firstItem="kpE-py-5Vg" firstAttribute="top" secondItem="D2W-mr-9e3" secondAttribute="bottom" id="moC-KE-DR6"/>
+                                    <constraint firstAttribute="bottom" secondItem="kpE-py-5Vg" secondAttribute="bottom" id="oAG-W1-ci5"/>
+                                    <constraint firstItem="kpE-py-5Vg" firstAttribute="top" secondItem="D2W-mr-9e3" secondAttribute="bottom" id="uQv-8R-INz"/>
+                                    <constraint firstItem="kpE-py-5Vg" firstAttribute="leading" secondItem="MVa-Qf-2Fu" secondAttribute="leading" id="vwZ-Ig-cTb"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="MVa-Qf-2Fu" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="2or-D7-ncQ"/>
+                            <constraint firstItem="MVa-Qf-2Fu" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Qtu-uT-G8a"/>
+                            <constraint firstItem="MVa-Qf-2Fu" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="gBZ-Bv-znG"/>
+                            <constraint firstAttribute="bottom" secondItem="MVa-Qf-2Fu" secondAttribute="bottom" id="sTt-QJ-9zH"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="🐵 MonkeyGiphy" id="xwg-pU-mKJ"/>
+                    <connections>
+                        <outlet property="collectionView" destination="kpE-py-5Vg" id="43d-DK-yQ1"/>
+                        <outlet property="navBar" destination="xwg-pU-mKJ" id="H52-At-nLT"/>
+                        <outlet property="searchbar" destination="D2W-mr-9e3" id="Q7X-Jk-XJB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="947.82608695652186" y="81.696428571428569"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="cRk-eU-G7U">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="C7o-QX-z80" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleAspectFit" id="JP4-qv-hNU">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textShadowColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <fontDescription key="fontDescription" type="system" pointSize="41"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="mHH-1x-R8I"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="enE-ZD-ukb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="37.681159420289859" y="81.696428571428569"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
