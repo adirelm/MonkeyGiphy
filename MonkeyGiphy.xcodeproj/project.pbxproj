@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		78544C3528DA0463CF2B2E94 /* Pods_MonkeyGiphy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F83352F2B23A907C23E13B4D /* Pods_MonkeyGiphy.framework */; };
-		BEA1292727FCB8D9003F5830 /* Background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BEA1292627FCB8D9003F5830 /* Background.jpg */; };
-		BEA1292927FCB9CA003F5830 /* Monkey.png in Resources */ = {isa = PBXBuildFile; fileRef = BEA1292827FCB9CA003F5830 /* Monkey.png */; };
 		BED9A1D627FB3DA8009D68DE /* PostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED9A1D527FB3DA8009D68DE /* PostManager.swift */; };
 		BEFFA35F27F9E3D200BF743D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFFA35E27F9E3D200BF743D /* AppDelegate.swift */; };
 		BEFFA36127F9E3D200BF743D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFFA36027F9E3D200BF743D /* SceneDelegate.swift */; };
@@ -25,8 +23,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BEA1292627FCB8D9003F5830 /* Background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Background.jpg; path = ../../../../Desktop/Background.jpg; sourceTree = "<group>"; };
-		BEA1292827FCB9CA003F5830 /* Monkey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Monkey.png; path = ../../../../Desktop/Monkey.png; sourceTree = "<group>"; };
 		BED9A1D527FB3DA8009D68DE /* PostManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostManager.swift; sourceTree = "<group>"; };
 		BEFFA35B27F9E3D200BF743D /* MonkeyGiphy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MonkeyGiphy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEFFA35E27F9E3D200BF743D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -68,15 +64,6 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		BEA1292327FCB5E3003F5830 /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				BEA1292627FCB8D9003F5830 /* Background.jpg */,
-				BEA1292827FCB9CA003F5830 /* Monkey.png */,
-			);
-			path = Images;
-			sourceTree = "<group>";
-		};
 		BEFFA35227F9E3D200BF743D = {
 			isa = PBXGroup;
 			children = (
@@ -104,7 +91,6 @@
 				BEFFA37827F9ECAB00BF743D /* View Model */,
 				BEFFA37627F9EC9200BF743D /* View */,
 				BEFFA37927F9ECB500BF743D /* Music */,
-				BEA1292327FCB5E3003F5830 /* Images */,
 				BEFFA36927F9E3D400BF743D /* LaunchScreen.storyboard */,
 				BEFFA36C27F9E3D400BF743D /* Info.plist */,
 				BEFFA36727F9E3D400BF743D /* Assets.xcassets */,
@@ -216,11 +202,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BEA1292927FCB9CA003F5830 /* Monkey.png in Resources */,
 				BEFFA38327FA217D00BF743D /* song.wav in Resources */,
 				BEFFA36B27F9E3D400BF743D /* LaunchScreen.storyboard in Resources */,
 				BEFFA36827F9E3D400BF743D /* Assets.xcassets in Resources */,
-				BEA1292727FCB8D9003F5830 /* Background.jpg in Resources */,
 				BEFFA36627F9E3D200BF743D /* Main.storyboard in Resources */,
 				BEFFA37527F9E76400BF743D /* GifCollectionViewCell.xib in Resources */,
 			);
