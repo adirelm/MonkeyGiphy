@@ -109,8 +109,6 @@ extension ViewController: UICollectionViewDelegate {
         else {
             removeImage()
         }
-        
-        cell.delegate = self
     }
     
     @objc func removeImage() {
@@ -166,18 +164,32 @@ extension ViewController: UICollectionViewDataSource, MyTableViewDelegate {
     }
     
     func saveToGalleryButton(with data: Data) {
-        let refreshAlert = UIAlertController(title: "Yay!", message: "Gif saved to Camera Roll!", preferredStyle: UIAlertController.Style.alert)
-        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        let actionSheet = UIAlertController(title: "Save gif to Camera Roll?", message: nil, preferredStyle: .actionSheet)
+        
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        actionSheet.addAction(UIAlertAction(title: "Save!", style: .destructive, handler: {_ in
+            
+            let refreshAlert = UIAlertController(title: "Yay!", message: "Gif saved to Camera Roll!", preferredStyle: UIAlertController.Style.alert)
+            refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
 
-        PHPhotoLibrary.shared().performChanges({
-            let request = PHAssetCreationRequest.forAsset()
-            request.addResource(with: .photo, data: data, options: nil)
-        }) { (success, error) in
-            if error == nil {
-                return
+            PHPhotoLibrary.shared().performChanges({
+                let request = PHAssetCreationRequest.forAsset()
+                request.addResource(with: .photo, data: data, options: nil)
+            }) { (success, error) in
+                if error == nil {
+                    return
+                }
             }
+            self.present(refreshAlert, animated: true, completion: nil)
+            
         }
-        present(refreshAlert, animated: true, completion: nil)
+            
+        ))
+        
+        present(actionSheet, animated: true)
+        
+        
     }
 }
 
