@@ -13,36 +13,33 @@ class ViewController: UIViewController, UISearchBarDelegate {
     
     @IBOutlet weak var searchbar: UISearchBar!
     @IBOutlet var collectionView: UICollectionView!
-    var data: [Result] = []
-    var songPlayer : AVAudioPlayer?
-    var imageFullScreen = false
     @IBOutlet weak var navBar: UINavigationItem!
     
-    var postManager = PostManager()
+    
+    private var data: [Result] = []
+    private  var songPlayer : AVAudioPlayer?
+    private var imageFullScreen = false
+
+    
+    private var postManager = PostManager()
+    private var K = Constants()
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        setUpDelegates()
+        setUpNavBar()
+        setUpSearchBar()
+        setUpCollectionView()
+        hideKeyboardWhenTappedAround()
+        setUpSound()
         
-        // Navigation bar modify
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .systemBlue
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-        navBar.standardAppearance = appearance;
-        navBar.scrollEdgeAppearance = navBar.standardAppearance
-
-        // Search bar modify
-        self.searchbar.barTintColor = .systemGray
-        searchbar.searchTextField.backgroundColor = .systemGray3
+        postManager.fetchPhotos(query: K.initalFetch)
         
-        
-        searchbar.delegate = self;
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        postManager.delegate = self
-        
-        
+    }
+    
+    private func setUpCollectionView() {
         collectionView.register(GifCollectionViewCell.nib(), forCellWithReuseIdentifier: GifCollectionViewCell.identifier)
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -51,33 +48,50 @@ class ViewController: UIViewController, UISearchBarDelegate {
         layout.itemSize = CGSize(width: view.frame.size.width/2, height: view.frame.size.width/2)
         collectionView.backgroundColor = .systemBackground
         collectionView.collectionViewLayout = layout
-        
-        
-        self.hideKeyboardWhenTappedAround()
-        SetUpSound()
-        postManager.fetchPhotos(query: "Cartoon")
-        
     }
+    
+    private func setUpSearchBar() {
+        self.searchbar.barTintColor = .systemGray
+        searchbar.searchTextField.backgroundColor = .systemGray3
+    }
+    
+    private func setUpNavBar() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .systemBlue
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navBar.standardAppearance = appearance;
+        navBar.scrollEdgeAppearance = navBar.standardAppearance
+    }
+    
+    private func setUpDelegates() {
+        searchbar.delegate = self;
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        postManager.delegate = self
+    }
+    
+    
     
 
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchbar.resignFirstResponder()
-        if let text = searchbar.text {
-            data = []
-            collectionView?.reloadData()
-            postManager.fetchPhotos(query: text)
-        }
+        guard let text = searchbar.text  else {return}
+        data = []
+        collectionView?.reloadData()
+        postManager.fetchPhotos(query: text)
+        
     }
     
-    func SetUpSound() {
-        if let path = Bundle.main.path(forResource: "song", ofType: "wav") {
-            let filePath = NSURL(fileURLWithPath:path)
-            songPlayer = try! AVAudioPlayer.init(contentsOf: filePath as URL)
-            songPlayer?.numberOfLoops = -1 //logic for infinite loop
-            songPlayer?.prepareToPlay()
-            songPlayer?.play()
-        }
+    private func setUpSound() {
+        guard let path = Bundle.main.path(forResource: "song", ofType: "wav") else { return }
+        let filePath = NSURL(fileURLWithPath:path)
+        songPlayer = try! AVAudioPlayer.init(contentsOf: filePath as URL)
+        songPlayer?.numberOfLoops = -1 //logic for infinite loop
+        songPlayer?.prepareToPlay()
+        songPlayer?.play()
+        
     }
     
     
@@ -159,7 +173,6 @@ extension ViewController: UICollectionViewDataSource, MyTableViewDelegate {
         let firstActivityItem: Array = [data]
         let activityViewController:UIActivityViewController = UIActivityViewController(activityItems: firstActivityItem, applicationActivities: nil)
         self.present(activityViewController, animated: true, completion: nil)
-        
         
     }
     

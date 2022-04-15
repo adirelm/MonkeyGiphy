@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		78544C3528DA0463CF2B2E94 /* Pods_MonkeyGiphy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F83352F2B23A907C23E13B4D /* Pods_MonkeyGiphy.framework */; };
+		BE2C718C28097E9800A27FC3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2C718B28097E9800A27FC3 /* Constants.swift */; };
 		BED9A1D627FB3DA8009D68DE /* PostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED9A1D527FB3DA8009D68DE /* PostManager.swift */; };
 		BEFFA35F27F9E3D200BF743D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFFA35E27F9E3D200BF743D /* AppDelegate.swift */; };
 		BEFFA36127F9E3D200BF743D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFFA36027F9E3D200BF743D /* SceneDelegate.swift */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BE2C718B28097E9800A27FC3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = /Users/adirelmakais/Documents/MonkeyGiphy/MonkeyGiphy/Constants.swift; sourceTree = "<absolute>"; };
 		BED9A1D527FB3DA8009D68DE /* PostManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostManager.swift; sourceTree = "<group>"; };
 		BEFFA35B27F9E3D200BF743D /* MonkeyGiphy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MonkeyGiphy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEFFA35E27F9E3D200BF743D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -88,10 +90,10 @@
 				BEFFA35E27F9E3D200BF743D /* AppDelegate.swift */,
 				BEFFA36027F9E3D200BF743D /* SceneDelegate.swift */,
 				BEFFA37727F9ECA300BF743D /* Model */,
-				BEFFA37827F9ECAB00BF743D /* View Model */,
+				BEFFA37827F9ECAB00BF743D /* Controllers */,
 				BEFFA37627F9EC9200BF743D /* View */,
 				BEFFA37927F9ECB500BF743D /* Music */,
-				BEFFA36927F9E3D400BF743D /* LaunchScreen.storyboard */,
+				BE2C718B28097E9800A27FC3 /* Constants.swift */,
 				BEFFA36C27F9E3D400BF743D /* Info.plist */,
 				BEFFA36727F9E3D400BF743D /* Assets.xcassets */,
 			);
@@ -101,7 +103,9 @@
 		BEFFA37627F9EC9200BF743D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				BEFFA37327F9E76400BF743D /* GifCollectionViewCell.xib */,
 				BEFFA36427F9E3D200BF743D /* Main.storyboard */,
+				BEFFA36927F9E3D400BF743D /* LaunchScreen.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -115,14 +119,13 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		BEFFA37827F9ECAB00BF743D /* View Model */ = {
+		BEFFA37827F9ECAB00BF743D /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				BEFFA36227F9E3D200BF743D /* ViewController.swift */,
-				BEFFA37327F9E76400BF743D /* GifCollectionViewCell.xib */,
 				BEFFA37227F9E76400BF743D /* GifCollectionViewCell.swift */,
 			);
-			path = "View Model";
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		BEFFA37927F9ECB500BF743D /* Music */ = {
@@ -263,6 +266,7 @@
 				BEFFA35F27F9E3D200BF743D /* AppDelegate.swift in Sources */,
 				BEFFA36127F9E3D200BF743D /* SceneDelegate.swift in Sources */,
 				BEFFA37427F9E76400BF743D /* GifCollectionViewCell.swift in Sources */,
+				BE2C718C28097E9800A27FC3 /* Constants.swift in Sources */,
 				BEFFA37E27F9EEC800BF743D /* Post.swift in Sources */,
 				BED9A1D627FB3DA8009D68DE /* PostManager.swift in Sources */,
 			);

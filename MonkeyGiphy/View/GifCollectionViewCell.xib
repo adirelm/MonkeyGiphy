@@ -20,9 +20,8 @@
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sv2-Jl-TlL">
                         <rect key="frame" x="0.0" y="0.0" width="210" height="211"/>
                     </imageView>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zZf-Jl-svC">
-                        <rect key="frame" x="161" y="174" width="45" height="31"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zZf-Jl-svC">
+                        <rect key="frame" x="166" y="174" width="45" height="37"/>
                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                         <state key="normal" image="square.and.arrow.up" catalog="system">
                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
@@ -34,9 +33,8 @@
                             <action selector="shareImageButton:" destination="gTV-IL-0wX" eventType="touchUpInside" id="EY7-On-h2h"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pdl-Qm-MWa">
-                        <rect key="frame" x="4" y="174" width="47" height="31"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pdl-Qm-MWa">
+                        <rect key="frame" x="0.0" y="174" width="56" height="37"/>
                         <state key="normal" title="Button"/>
                         <buttonConfiguration key="configuration" style="tinted" image="photo.on.rectangle" catalog="system" title=" ">
                             <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large" weight="bold"/>
@@ -51,8 +49,16 @@
             <constraints>
                 <constraint firstItem="sv2-Jl-TlL" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="CX2-Vn-zgl"/>
                 <constraint firstAttribute="bottom" secondItem="sv2-Jl-TlL" secondAttribute="bottom" id="NAb-A8-nL4"/>
+                <constraint firstItem="zZf-Jl-svC" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="174" id="NaQ-hT-UEp"/>
+                <constraint firstAttribute="bottom" secondItem="Pdl-Qm-MWa" secondAttribute="bottom" id="NrS-cZ-Pjx"/>
+                <constraint firstItem="Pdl-Qm-MWa" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Plg-T6-Lby"/>
+                <constraint firstItem="zZf-Jl-svC" firstAttribute="leading" secondItem="Pdl-Qm-MWa" secondAttribute="trailing" constant="110" id="Qxi-Zk-rfv"/>
+                <constraint firstAttribute="trailing" secondItem="zZf-Jl-svC" secondAttribute="trailing" id="WcV-bd-qTT"/>
+                <constraint firstAttribute="bottom" secondItem="zZf-Jl-svC" secondAttribute="bottom" id="iet-1B-1gQ"/>
+                <constraint firstItem="Pdl-Qm-MWa" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="174" id="nyZ-sz-O9m"/>
                 <constraint firstAttribute="trailing" secondItem="sv2-Jl-TlL" secondAttribute="trailing" id="p0d-4F-Cr1"/>
                 <constraint firstItem="sv2-Jl-TlL" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="rjM-16-bzo"/>
+                <constraint firstItem="zZf-Jl-svC" firstAttribute="leading" secondItem="Pdl-Qm-MWa" secondAttribute="trailing" constant="110" id="xXz-w1-kjI"/>
             </constraints>
             <size key="customSize" width="210" height="211"/>
             <connections>
