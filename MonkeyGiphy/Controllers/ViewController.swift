@@ -79,7 +79,6 @@ class ViewController: UIViewController, UISearchBarDelegate {
         searchbar.resignFirstResponder()
         guard let text = searchbar.text  else {return}
         data = []
-        collectionView?.reloadData()
         postManager.fetchPhotos(query: text)
         
     }
@@ -169,7 +168,6 @@ extension ViewController: UICollectionViewDataSource, MyTableViewDelegate {
     }
     
     func shareImageButton(with data: Data) {
-        
         let firstActivityItem: Array = [data]
         let activityViewController:UIActivityViewController = UIActivityViewController(activityItems: firstActivityItem, applicationActivities: nil)
         self.present(activityViewController, animated: true, completion: nil)
