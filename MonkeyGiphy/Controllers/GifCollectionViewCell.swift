@@ -14,28 +14,23 @@ protocol MyTableViewDelegate: AnyObject {
     func saveToGalleryButton(with data: Data)
 }
 
-
 class GifCollectionViewCell: UICollectionViewCell {
     
     weak var delegate: MyTableViewDelegate?
     
     @IBOutlet var imageView: UIImageView!
-    var data: Data?
-    
+    private var data: Data?
+    private var task: URLSessionDataTask?
     static let identifier = "GifCollectionViewCell"
-    var task: URLSessionDataTask?
 
     override func awakeFromNib() {
         super.awakeFromNib()
     }
     
-    
     override func prepareForReuse() {
         super.prepareForReuse()
-        
         task?.cancel()
         task = nil
-        
         imageView.image = nil
     }
     
@@ -58,27 +53,20 @@ class GifCollectionViewCell: UICollectionViewCell {
         task.resume()
         
         self.task = task
-        
-        
-        
     }
-    
-    
     
     @IBAction func shareImageButton(_ sender: UIButton) {
-        delegate?.shareImageButton(with: self.data!)
+        guard let data = data else { return }
+        delegate?.shareImageButton(with: data)
     }
-    
     
     @IBAction func saveToGalleryButton(_ sender: UIButton) {
-        delegate?.saveToGalleryButton(with: self.data!)
+        guard let data = data else { return }
+        delegate?.saveToGalleryButton(with: data)
     }
     
-
     static func nib() -> UINib {
         return UINib(nibName: "GifCollectionViewCell", bundle: nil)
     }
     
-
-
 }

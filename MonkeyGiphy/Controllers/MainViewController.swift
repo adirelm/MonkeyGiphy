@@ -9,34 +9,27 @@ import UIKit
 import AVFAudio
 import Photos
 
-class ViewController: UIViewController, UISearchBarDelegate {
+class MainViewController: UIViewController, UISearchBarDelegate {
     
     @IBOutlet weak var searchbar: UISearchBar!
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet weak var navBar: UINavigationItem!
     
-    
     private var data: [Result] = []
-    private  var songPlayer : AVAudioPlayer?
+    private var songPlayer : AVAudioPlayer?
     private var imageFullScreen = false
-
-    
     private var postManager = PostManager()
-    private var K = Constants()
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
         setUpDelegates()
         setUpNavBar()
         setUpSearchBar()
         setUpCollectionView()
         hideKeyboardWhenTappedAround()
         setUpSound()
-        
-        postManager.fetchPhotos(query: K.initalFetch)
-        
+        postManager.fetchPhotos(query: "Cartoon")
     }
     
     private func setUpCollectionView() {
@@ -71,16 +64,11 @@ class ViewController: UIViewController, UISearchBarDelegate {
         postManager.delegate = self
     }
     
-    
-    
-
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchbar.resignFirstResponder()
         guard let text = searchbar.text  else {return}
         data = []
         postManager.fetchPhotos(query: text)
-        
     }
     
     private func setUpSound() {
@@ -90,13 +78,10 @@ class ViewController: UIViewController, UISearchBarDelegate {
         songPlayer?.numberOfLoops = -1 //logic for infinite loop
         songPlayer?.prepareToPlay()
         songPlayer?.play()
-        
     }
-    
-    
 }
 
-extension ViewController: PostManagerDelegate {
+extension MainViewController: PostManagerDelegate {
     
     func didUpdateData(postManager: PostManager, postGifData: Post) {
             DispatchQueue.main.async {
@@ -104,52 +89,24 @@ extension ViewController: PostManagerDelegate {
                 self.collectionView?.reloadData()
             }
     }
-    
 }
 
-
-extension ViewController: UICollectionViewDelegate {
+extension MainViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem (at: indexPath) as? GifCollectionViewCell else {
             return
         }
-        let gif = cell.imageView.image!
+        guard let gif = cell.imageView.image else { return }
         
-        if !imageFullScreen {
-            self.addImageViewWithImage(image: gif)
+        let fullScreenGifVC = UIStoryboard(name: "FullScreenGif", bundle: .main).instantiateViewController(identifier: "FullScreenGif") { coder in
+            FullScreenGifViewController(coder: coder, image: gif)
         }
-        else {
-            removeImage()
-        }
+        navigationController?.pushViewController(fullScreenGifVC, animated: true)
     }
-    
-    @objc func removeImage() {
-        let imageView = (self.view.viewWithTag(100)! as! UIImageView)
-        imageView.removeFromSuperview()
-        imageFullScreen = false
-    }
-    
-    func addImageViewWithImage(image: UIImage) {
-        let imageView = UIImageView(frame: self.view.frame)
-        imageView.contentMode = .scaleAspectFit
-        imageView.backgroundColor = UIColor.black
-        imageView.image = image
-        imageView.tag = 100
-        let dismissTap = UITapGestureRecognizer(target: self, action: #selector(self.removeImage))
-        dismissTap.numberOfTapsRequired = 1
-        imageView.addGestureRecognizer(dismissTap)
-        self.view.addSubview(imageView)
-        imageFullScreen = true
-        
-    }
-        
-        
 }
 
-
-
-extension ViewController: UICollectionViewDataSource, MyTableViewDelegate {
+extension MainViewController: UICollectionViewDataSource, MyTableViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
@@ -195,15 +152,10 @@ extension ViewController: UICollectionViewDataSource, MyTableViewDelegate {
             self.present(refreshAlert, animated: true, completion: nil)
             
         }
-            
         ))
-        
         present(actionSheet, animated: true)
-        
-        
     }
 }
-
 
 // Hide keyboard by touching anywhere
 extension UIViewController {
