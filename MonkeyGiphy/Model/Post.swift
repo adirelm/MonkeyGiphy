@@ -9,19 +9,18 @@ import UIKit
 
 struct Post: Codable {
     let data: [Result]
-    let pagination: Pages
+    let pagination: PaginationData
 }
 
-struct Pages: Codable {
+struct PaginationData: Codable {
     let total_count: Int
     let count: Int
-    
+    let offset: Int
 }
 
 struct Result: Codable {
     let id: String
     let images: Images
-    
 }
 
 struct Images: Codable {

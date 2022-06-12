@@ -10,30 +10,38 @@ import AVFAudio
 import Photos
 
 class MainViewController: UIViewController, UISearchBarDelegate {
+    private lazy var searchController: UISearchController = {
+        let searchController = UISearchController()
+        searchController.searchBar.searchBarStyle = .default
+        searchController.searchBar.placeholder = "e.g 'Monkey'"
+        searchController.searchBar.searchTextField.backgroundColor = .white
+        searchController.searchBar.tintColor = .white
+        searchController.searchBar.returnKeyType = .search
+        searchController.searchBar.delegate = self
+        return searchController
+    }()
     
-    @IBOutlet weak var searchbar: UISearchBar!
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet weak var navBar: UINavigationItem!
     
-    private var data: [Result] = []
-    private var songPlayer : AVAudioPlayer?
-    private var imageFullScreen = false
+    private var songPlayer: AVAudioPlayer?
+    private let defaultVal = "Cartoon"
     private var postManager = PostManager()
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpDelegates()
         setUpNavBar()
-        setUpSearchBar()
         setUpCollectionView()
         hideKeyboardWhenTappedAround()
         setUpSound()
-        postManager.fetchPhotos(query: "Cartoon")
+        postManager.fetchPhotos(query: defaultVal)
     }
     
     private func setUpCollectionView() {
         collectionView.register(GifCollectionViewCell.nib(), forCellWithReuseIdentifier: GifCollectionViewCell.identifier)
+        collectionView.register(LoadingIndicatorCollectionViewCell.nib(), forCellWithReuseIdentifier: LoadingIndicatorCollectionViewCell.identifier)
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 2
@@ -43,11 +51,6 @@ class MainViewController: UIViewController, UISearchBarDelegate {
         collectionView.collectionViewLayout = layout
     }
     
-    private func setUpSearchBar() {
-        self.searchbar.barTintColor = .systemGray
-        searchbar.searchTextField.backgroundColor = .systemGray3
-    }
-    
     private func setUpNavBar() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
@@ -55,19 +58,20 @@ class MainViewController: UIViewController, UISearchBarDelegate {
         appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         navBar.standardAppearance = appearance;
         navBar.scrollEdgeAppearance = navBar.standardAppearance
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     private func setUpDelegates() {
-        searchbar.delegate = self;
         collectionView.delegate = self
         collectionView.dataSource = self
         postManager.delegate = self
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchbar.resignFirstResponder()
-        guard let text = searchbar.text  else {return}
-        data = []
+        searchBar.resignFirstResponder()
+        guard let text = searchBar.text  else { return }
+        postManager.modifyDataSource(with: nil)
         postManager.fetchPhotos(query: text)
     }
     
@@ -82,17 +86,16 @@ class MainViewController: UIViewController, UISearchBarDelegate {
 }
 
 extension MainViewController: PostManagerDelegate {
-    
-    func didUpdateData(postManager: PostManager, postGifData: Post) {
-            DispatchQueue.main.async {
-                self.data = postGifData.data
-                self.collectionView?.reloadData()
-            }
+    func didUpdateData(postManager: PostManager?, postGifData: Post) {
+        guard let postManager = postManager else { return }
+        DispatchQueue.main.async {
+            postManager.modifyDataSource(with: postGifData.data)
+            self.collectionView?.reloadData()
+        }
     }
 }
 
 extension MainViewController: UICollectionViewDelegate {
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem (at: indexPath) as? GifCollectionViewCell else {
             return
@@ -106,24 +109,40 @@ extension MainViewController: UICollectionViewDelegate {
     }
 }
 
-extension MainViewController: UICollectionViewDataSource, MyTableViewDelegate {
-    
+extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        return data.count
+        postManager.isLoading ? postManager.data.count + 1 : postManager.data.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let imageURLString = data[indexPath.row].images.downsized.url
+        
+        if postManager.isLoading {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LoadingIndicatorCollectionViewCell.identifier, for: indexPath) as? LoadingIndicatorCollectionViewCell else { return UICollectionViewCell() }
+            cell.activityIndicator.startAnimating()
+            return cell
+        }
+        
+        let imageURLString = postManager.data[indexPath.row].images.downsized.url
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GifCollectionViewCell.identifier, for: indexPath) as? GifCollectionViewCell else {
             return UICollectionViewCell()
         }
-        
         cell.configure(with: imageURLString, session: postManager.session)
         cell.delegate = self
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard indexPath.item == postManager.data.count - 2 else { return }
+        guard let searchText = searchController.searchBar.text else { return }
+        if !searchText.trimmingCharacters(in: .whitespaces).isEmpty {
+            postManager.fetchPhotos(query: searchText)
+            return
+        } else { postManager.fetchPhotos(query: defaultVal) }
+    }
+    
+}
+
+extension MainViewController: MyTableViewDelegate {
     func shareImageButton(with data: Data) {
         let firstActivityItem: Array = [data]
         let activityViewController:UIActivityViewController = UIActivityViewController(activityItems: firstActivityItem, applicationActivities: nil)
@@ -133,14 +152,11 @@ extension MainViewController: UICollectionViewDataSource, MyTableViewDelegate {
     
     func saveToGalleryButton(with data: Data) {
         let actionSheet = UIAlertController(title: "Save gif to Camera Roll?", message: nil, preferredStyle: .actionSheet)
-        
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
         actionSheet.addAction(UIAlertAction(title: "Save!", style: .destructive, handler: {_ in
-            
             let refreshAlert = UIAlertController(title: "Yay!", message: "Gif saved to Camera Roll!", preferredStyle: UIAlertController.Style.alert)
             refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-
+            
             PHPhotoLibrary.shared().performChanges({
                 let request = PHAssetCreationRequest.forAsset()
                 request.addResource(with: .photo, data: data, options: nil)
@@ -152,7 +168,7 @@ extension MainViewController: UICollectionViewDataSource, MyTableViewDelegate {
             self.present(refreshAlert, animated: true, completion: nil)
             
         }
-        ))
+                                           ))
         present(actionSheet, animated: true)
     }
 }

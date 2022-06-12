@@ -16,11 +16,20 @@ protocol MyTableViewDelegate: AnyObject {
 
 class GifCollectionViewCell: UICollectionViewCell {
     
-    weak var delegate: MyTableViewDelegate?
+    @IBOutlet var imageView: UIImageView! {
+        didSet {
+            imageView.layer.cornerRadius = 8.0
+        }
+    }
     
-    @IBOutlet var imageView: UIImageView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView! {
+        didSet {
+            activityIndicator.hidesWhenStopped = true
+        }
+    }
     private var data: Data?
     private var task: URLSessionDataTask?
+    weak var delegate: MyTableViewDelegate?
     static let identifier = "GifCollectionViewCell"
 
     override func awakeFromNib() {
@@ -35,23 +44,18 @@ class GifCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(with urlString: String, session: URLSession) {
-        guard let url = URL(string: urlString) else {
-            return
-        }
-    
+        self.activityIndicator.startAnimating()
+        guard let url = URL(string: urlString) else { return }
         let task = session.dataTask(with: url) { [weak self] data, _, error in
-            guard let data = data, error == nil else {
-                return
-            }
-            
+            guard let data = data, error == nil else { return }
             DispatchQueue.main.async {
                 let gif = UIImage.gif(data: data)
                 self?.imageView.image = gif
                 self?.data = data
+                self?.activityIndicator.stopAnimating()
             }
         }
         task.resume()
-        
         self.task = task
     }
     
