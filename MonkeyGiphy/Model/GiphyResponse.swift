@@ -7,8 +7,8 @@
 
 import UIKit
 
-struct Post: Codable {
-    let data: [Result]
+struct GiphyResponse: Codable {
+    let data: [GifData]
     let pagination: PaginationData
 }
 
@@ -18,7 +18,15 @@ struct PaginationData: Codable {
     let offset: Int
 }
 
-struct Result: Codable {
+struct GifData: Codable, Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func == (lhs: GifData, rhs: GifData) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
     let id: String
     let images: Images
 }

@@ -6,15 +6,16 @@
 //
 
 import Foundation
+import UIKit
 
 protocol PostManagerDelegate {
-    func didUpdateData(postManager: PostManager?, postGifData: Post )
+    func didUpdateData(postManager: PostManager?, postGifData: GiphyResponse )
 }
 
 class PostManager {
     var URLString: String?
     
-    private(set) var data: [Result] = []
+    private(set) var data: [GifData] = []
     private(set) var isLoading = false
     
     lazy var session: URLSession = {
@@ -28,7 +29,7 @@ class PostManager {
     
     var delegate: PostManagerDelegate?
     
-    func modifyDataSource(with data: [Result]?) {
+    func modifyDataSource(with data: [GifData]?) {
         if let data = data {
             self.data += data
         }
@@ -48,7 +49,7 @@ class PostManager {
                 return
             }
             do {
-                let jsonResult = try JSONDecoder().decode(Post.self, from: data)
+                let jsonResult = try JSONDecoder().decode(GiphyResponse.self, from: data)
                 self?.delegate?.didUpdateData(postManager: self, postGifData: jsonResult)
             }
             catch {

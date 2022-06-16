@@ -12,7 +12,6 @@
 		BE421B062846382F00D2E827 /* FullScreenGif.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE421B052846382F00D2E827 /* FullScreenGif.storyboard */; };
 		BE421B1028520F8700D2E827 /* LoadingIndicatorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE421B0E28520F8700D2E827 /* LoadingIndicatorCollectionViewCell.swift */; };
 		BE421B1128520F8700D2E827 /* LoadingIndicatorCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE421B0F28520F8700D2E827 /* LoadingIndicatorCollectionViewCell.xib */; };
-		BE421B1428522DB100D2E827 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = BE421B1328522DB100D2E827 /* Kingfisher */; };
 		BED9A1D627FB3DA8009D68DE /* PostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED9A1D527FB3DA8009D68DE /* PostManager.swift */; };
 		BEFFA35F27F9E3D200BF743D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFFA35E27F9E3D200BF743D /* AppDelegate.swift */; };
 		BEFFA36127F9E3D200BF743D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFFA36027F9E3D200BF743D /* SceneDelegate.swift */; };
@@ -22,7 +21,7 @@
 		BEFFA36B27F9E3D400BF743D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEFFA36927F9E3D400BF743D /* LaunchScreen.storyboard */; };
 		BEFFA37427F9E76400BF743D /* GifCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFFA37227F9E76400BF743D /* GifCollectionViewCell.swift */; };
 		BEFFA37527F9E76400BF743D /* GifCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEFFA37327F9E76400BF743D /* GifCollectionViewCell.xib */; };
-		BEFFA37E27F9EEC800BF743D /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFFA37D27F9EEC800BF743D /* Post.swift */; };
+		BEFFA37E27F9EEC800BF743D /* GiphyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFFA37D27F9EEC800BF743D /* GiphyResponse.swift */; };
 		BEFFA38127F9F71400BF743D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEFFA38027F9F71400BF743D /* AVFoundation.framework */; };
 		BEFFA38327FA217D00BF743D /* song.wav in Resources */ = {isa = PBXBuildFile; fileRef = BEFFA38227FA217D00BF743D /* song.wav */; };
 /* End PBXBuildFile section */
@@ -43,7 +42,7 @@
 		BEFFA36C27F9E3D400BF743D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEFFA37227F9E76400BF743D /* GifCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifCollectionViewCell.swift; sourceTree = "<group>"; };
 		BEFFA37327F9E76400BF743D /* GifCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GifCollectionViewCell.xib; sourceTree = "<group>"; };
-		BEFFA37D27F9EEC800BF743D /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		BEFFA37D27F9EEC800BF743D /* GiphyResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphyResponse.swift; sourceTree = "<group>"; };
 		BEFFA38027F9F71400BF743D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		BEFFA38227FA217D00BF743D /* song.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = song.wav; sourceTree = "<group>"; };
 		DC84F932B3AD44AFA8C63662 /* Pods-MonkeyGiphy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonkeyGiphy.debug.xcconfig"; path = "Target Support Files/Pods-MonkeyGiphy/Pods-MonkeyGiphy.debug.xcconfig"; sourceTree = "<group>"; };
@@ -56,7 +55,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE421B1428522DB100D2E827 /* Kingfisher in Frameworks */,
 				BEFFA38127F9F71400BF743D /* AVFoundation.framework in Frameworks */,
 				78544C3528DA0463CF2B2E94 /* Pods_MonkeyGiphy.framework in Frameworks */,
 			);
@@ -155,7 +153,7 @@
 		BEFFA37727F9ECA300BF743D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				BEFFA37D27F9EEC800BF743D /* Post.swift */,
+				BEFFA37D27F9EEC800BF743D /* GiphyResponse.swift */,
 				BED9A1D527FB3DA8009D68DE /* PostManager.swift */,
 			);
 			path = Model;
@@ -207,7 +205,6 @@
 			);
 			name = MonkeyGiphy;
 			packageProductDependencies = (
-				BE421B1328522DB100D2E827 /* Kingfisher */,
 			);
 			productName = MonkeyGiphy;
 			productReference = BEFFA35B27F9E3D200BF743D /* MonkeyGiphy.app */;
@@ -238,7 +235,6 @@
 			);
 			mainGroup = BEFFA35227F9E3D200BF743D;
 			packageReferences = (
-				BE421B1228522DB100D2E827 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = BEFFA35C27F9E3D200BF743D /* Products */;
 			projectDirPath = "";
@@ -319,7 +315,7 @@
 				BE421ADC2846302300D2E827 /* FullScreenGifViewController.swift in Sources */,
 				BEFFA37427F9E76400BF743D /* GifCollectionViewCell.swift in Sources */,
 				BE421B1028520F8700D2E827 /* LoadingIndicatorCollectionViewCell.swift in Sources */,
-				BEFFA37E27F9EEC800BF743D /* Post.swift in Sources */,
+				BEFFA37E27F9EEC800BF743D /* GiphyResponse.swift in Sources */,
 				BED9A1D627FB3DA8009D68DE /* PostManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -544,25 +540,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		BE421B1228522DB100D2E827 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		BE421B1328522DB100D2E827 /* Kingfisher */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BE421B1228522DB100D2E827 /* XCRemoteSwiftPackageReference "Kingfisher" */;
-			productName = Kingfisher;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BEFFA35327F9E3D200BF743D /* Project object */;
 }

@@ -9,25 +9,25 @@ import UIKit
 import AVFAudio
 import Photos
 
+enum GifSection: Int {
+    case main
+}
+
 class MainViewController: UIViewController, UISearchBarDelegate {
-    private lazy var searchController: UISearchController = {
-        let searchController = UISearchController()
-        searchController.searchBar.searchBarStyle = .default
-        searchController.searchBar.placeholder = "e.g 'Monkey'"
-        searchController.searchBar.searchTextField.backgroundColor = .white
-        searchController.searchBar.tintColor = .white
-        searchController.searchBar.returnKeyType = .search
-        searchController.searchBar.delegate = self
-        return searchController
-    }()
+    typealias DataSource = UICollectionViewDiffableDataSource<GifSection, GifData>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<GifSection, GifData>
     
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet weak var navBar: UINavigationItem!
     
-    private var songPlayer: AVAudioPlayer?
-    private let defaultVal = "Cartoon"
-    private var postManager = PostManager()
+    private lazy var searchController = setUpSearchController()
+    private lazy var dataSource = makeDataSource()
     
+    private var songPlayer: AVAudioPlayer?
+    private var postManager = PostManager()
+    private let defaultVal = "Cartoon"
+    
+    //MARK: - LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +37,47 @@ class MainViewController: UIViewController, UISearchBarDelegate {
         hideKeyboardWhenTappedAround()
         setUpSound()
         postManager.fetchPhotos(query: defaultVal)
+    }
+    
+    //MARK: - Diffable DataSource
+    private func makeDataSource() -> DataSource {
+        let dataSource = DataSource(collectionView: collectionView) { [weak self] (collectionView, indexPath, gif) in
+            
+            guard let self = self else { return UICollectionViewCell() }
+
+            if self.postManager.isLoading {
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LoadingIndicatorCollectionViewCell.identifier, for: indexPath) as? LoadingIndicatorCollectionViewCell else { return UICollectionViewCell() }
+                cell.activityIndicator.startAnimating()
+                return cell
+            }
+            
+            let imageURLString = gif.images.downsized.url
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GifCollectionViewCell.identifier, for: indexPath) as? GifCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            cell.configure(with: imageURLString, session: self.postManager.session)
+            cell.delegate = self
+            return cell
+        }
+        return dataSource
+    }
+    
+    private func applySnapshot() {
+        var snapshot = Snapshot()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(postManager.data, toSection: .main)
+        dataSource.apply(snapshot, animatingDifferences: true)
+    }
+    
+    func setUpSearchController() -> UISearchController {
+        let searchController = UISearchController()
+        searchController.searchBar.searchBarStyle = .default
+        searchController.searchBar.placeholder = "e.g 'Monkey'"
+        searchController.searchBar.searchTextField.backgroundColor = .white
+        searchController.searchBar.tintColor = .white
+        searchController.searchBar.returnKeyType = .search
+        searchController.searchBar.delegate = self
+        return searchController
     }
     
     private func setUpCollectionView() {
@@ -64,7 +105,6 @@ class MainViewController: UIViewController, UISearchBarDelegate {
     
     private func setUpDelegates() {
         collectionView.delegate = self
-        collectionView.dataSource = self
         postManager.delegate = self
     }
     
@@ -86,20 +126,18 @@ class MainViewController: UIViewController, UISearchBarDelegate {
 }
 
 extension MainViewController: PostManagerDelegate {
-    func didUpdateData(postManager: PostManager?, postGifData: Post) {
+    func didUpdateData(postManager: PostManager?, postGifData: GiphyResponse) {
         guard let postManager = postManager else { return }
         DispatchQueue.main.async {
             postManager.modifyDataSource(with: postGifData.data)
-            self.collectionView?.reloadData()
+            self.applySnapshot()
         }
     }
 }
 
 extension MainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem (at: indexPath) as? GifCollectionViewCell else {
-            return
-        }
+        guard let cell = collectionView.cellForItem (at: indexPath) as? GifCollectionViewCell else { return }
         guard let gif = cell.imageView.image else { return }
         
         let fullScreenGifVC = UIStoryboard(name: "FullScreenGif", bundle: .main).instantiateViewController(identifier: "FullScreenGif") { coder in
@@ -109,26 +147,9 @@ extension MainViewController: UICollectionViewDelegate {
     }
 }
 
-extension MainViewController: UICollectionViewDataSource {
+extension MainViewController {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         postManager.isLoading ? postManager.data.count + 1 : postManager.data.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        if postManager.isLoading {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LoadingIndicatorCollectionViewCell.identifier, for: indexPath) as? LoadingIndicatorCollectionViewCell else { return UICollectionViewCell() }
-            cell.activityIndicator.startAnimating()
-            return cell
-        }
-        
-        let imageURLString = postManager.data[indexPath.row].images.downsized.url
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GifCollectionViewCell.identifier, for: indexPath) as? GifCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        cell.configure(with: imageURLString, session: postManager.session)
-        cell.delegate = self
-        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -139,7 +160,6 @@ extension MainViewController: UICollectionViewDataSource {
             return
         } else { postManager.fetchPhotos(query: defaultVal) }
     }
-    
 }
 
 extension MainViewController: MyTableViewDelegate {
