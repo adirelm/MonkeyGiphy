@@ -59,4 +59,16 @@ class PostManager {
         task.resume()
     }
     
+    func getGifUrlByIndexPath(for indexPath: IndexPath) -> String {
+        return self.data[indexPath.row].images.downsized.url
+    }
+    
+    func getGifUrlByID(for gifID: UUID) -> String? {
+        guard let index = data.firstIndex(where: { gifData in
+        gifData.id == gifID
+        }) else { return nil }
+        
+        return data[index].images.downsized.url
+    }
+    
 }

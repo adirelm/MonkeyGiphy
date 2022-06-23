@@ -18,16 +18,8 @@ struct PaginationData: Codable {
     let offset: Int
 }
 
-struct GifData: Codable, Hashable {
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-    
-    static func == (lhs: GifData, rhs: GifData) -> Bool {
-        return lhs.id == rhs.id
-    }
-    
-    let id: String
+struct GifData: Codable, Identifiable {
+    let id = UUID()
     let images: Images
 }
 

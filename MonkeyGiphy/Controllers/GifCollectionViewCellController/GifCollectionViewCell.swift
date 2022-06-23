@@ -43,6 +43,11 @@ class GifCollectionViewCell: UICollectionViewCell {
         imageView.image = nil
     }
     
+    func getDataOfCell() -> Data? {
+        guard let data = data else { return nil }
+        return data
+    }
+    
     func configure(with urlString: String, session: URLSession) {
         self.activityIndicator.startAnimating()
         guard let url = URL(string: urlString) else { return }

@@ -21,24 +21,24 @@
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sv2-Jl-TlL">
                         <rect key="frame" x="3" y="3" width="204" height="205"/>
                     </imageView>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zZf-Jl-svC">
-                        <rect key="frame" x="162" y="177" width="45" height="31"/>
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="DD6-q0-BYC">
+                        <rect key="frame" x="95" y="95.5" width="20" height="20"/>
+                        <color key="color" systemColor="systemBlueColor"/>
+                    </activityIndicatorView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zZf-Jl-svC" userLabel="Share">
+                        <rect key="frame" x="157.5" y="177" width="49.5" height="31"/>
                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                         <state key="normal" image="square.and.arrow.up" catalog="system">
                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                         </state>
-                        <buttonConfiguration key="configuration" style="tinted" image="square.and.arrow.up" catalog="system">
+                        <buttonConfiguration key="configuration" style="tinted" image="square.and.arrow.up" catalog="system" title=" ">
                             <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large" weight="bold"/>
                         </buttonConfiguration>
                         <connections>
                             <action selector="shareImageButton:" destination="gTV-IL-0wX" eventType="touchUpInside" id="EY7-On-h2h"/>
                         </connections>
                     </button>
-                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="DD6-q0-BYC">
-                        <rect key="frame" x="95" y="95.5" width="20" height="20"/>
-                        <color key="color" systemColor="systemBlueColor"/>
-                    </activityIndicatorView>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pdl-Qm-MWa">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pdl-Qm-MWa" userLabel="SaveTpGallery">
                         <rect key="frame" x="3" y="177" width="45" height="31"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="45" id="ckl-hv-Sb3"/>

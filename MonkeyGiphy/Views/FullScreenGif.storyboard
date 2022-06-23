@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -17,32 +18,65 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="X7h-EB-ceA">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="caI-8C-oi0">
+                                <rect key="frame" x="0.0" y="84" width="414" height="812"/>
                             </imageView>
+                            <stackView opaque="NO" contentMode="right" distribution="fillEqually" spacing="211" translatesAutoresizingMaskIntoConstraints="NO" id="tQV-Rz-Xo7">
+                                <rect key="frame" x="0.0" y="53" width="414" height="31"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FUF-lR-Xu0" userLabel="SaveToGallery">
+                                        <rect key="frame" x="0.0" y="0.0" width="101.5" height="31"/>
+                                        <color key="tintColor" systemColor="systemGreenColor"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title=" " cornerStyle="capsule">
+                                            <imageReference key="image" image="tray.and.arrow.down.fill" catalog="system" symbolScale="large"/>
+                                            <color key="baseBackgroundColor" systemColor="systemGreenColor"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="saveToGalleryButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="eCp-nq-V6Y"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qPx-e4-YHR" userLabel="Share">
+                                        <rect key="frame" x="312.5" y="0.0" width="101.5" height="31"/>
+                                        <color key="tintColor" systemColor="systemGreenColor"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title=" " subtitle="" imagePadding="0.0" cornerStyle="capsule">
+                                            <imageReference key="image" image="square.and.arrow.up.fill" catalog="system" symbolScale="large"/>
+                                            <color key="baseBackgroundColor" systemColor="systemGreenColor"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="shareImageButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="RZP-1M-xa1"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="X7h-EB-ceA" firstAttribute="leading" secondItem="5EZ-qb-Rvc" secondAttribute="leading" id="50c-ET-JF0"/>
-                            <constraint firstAttribute="trailing" secondItem="X7h-EB-ceA" secondAttribute="trailing" id="5xf-IC-ice"/>
-                            <constraint firstItem="X7h-EB-ceA" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="E1E-Lr-0nD"/>
-                            <constraint firstAttribute="bottom" secondItem="X7h-EB-ceA" secondAttribute="bottom" id="sna-9Z-mor"/>
+                            <constraint firstItem="tQV-Rz-Xo7" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="0CU-Av-lsH"/>
+                            <constraint firstItem="caI-8C-oi0" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="3OX-JA-WwF"/>
+                            <constraint firstItem="caI-8C-oi0" firstAttribute="top" secondItem="tQV-Rz-Xo7" secondAttribute="bottom" id="4X1-Y3-9cF"/>
+                            <constraint firstItem="caI-8C-oi0" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="5t1-Cg-Y2c"/>
+                            <constraint firstItem="tQV-Rz-Xo7" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="9" id="oos-4I-3gL"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="tQV-Rz-Xo7" secondAttribute="trailing" id="vCK-XV-mWG"/>
+                            <constraint firstAttribute="bottom" secondItem="caI-8C-oi0" secondAttribute="bottom" id="wlz-QN-lBa"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="gifImageView" destination="X7h-EB-ceA" id="4dj-84-CQD"/>
+                        <outlet property="gifImageView" destination="caI-8C-oi0" id="RX5-mB-3mw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="133" y="91"/>
+            <point key="canvasLocation" x="131.8840579710145" y="90.401785714285708"/>
         </scene>
     </scenes>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        <image name="square.and.arrow.up.fill" catalog="system" width="115" height="128"/>
+        <image name="tray.and.arrow.down.fill" catalog="system" width="128" height="114"/>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

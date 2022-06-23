@@ -14,8 +14,8 @@ enum GifSection: Int {
 }
 
 class MainViewController: UIViewController, UISearchBarDelegate {
-    typealias DataSource = UICollectionViewDiffableDataSource<GifSection, GifData>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<GifSection, GifData>
+    typealias DataSource = UICollectionViewDiffableDataSource<GifSection, GifData.ID>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<GifSection, GifData.ID>
     
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet weak var navBar: UINavigationItem!
@@ -41,7 +41,7 @@ class MainViewController: UIViewController, UISearchBarDelegate {
     
     //MARK: - Diffable DataSource
     private func makeDataSource() -> DataSource {
-        let dataSource = DataSource(collectionView: collectionView) { [weak self] (collectionView, indexPath, gif) in
+        let dataSource = DataSource(collectionView: collectionView) { [weak self] (collectionView, indexPath, gifID) in
             
             guard let self = self else { return UICollectionViewCell() }
 
@@ -51,11 +51,11 @@ class MainViewController: UIViewController, UISearchBarDelegate {
                 return cell
             }
             
-            let imageURLString = gif.images.downsized.url
+            let gifURLString = self.postManager.getGifUrlByIndexPath(for: indexPath)
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GifCollectionViewCell.identifier, for: indexPath) as? GifCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            cell.configure(with: imageURLString, session: self.postManager.session)
+            cell.configure(with: gifURLString, session: self.postManager.session)
             cell.delegate = self
             return cell
         }
@@ -65,7 +65,7 @@ class MainViewController: UIViewController, UISearchBarDelegate {
     private func applySnapshot() {
         var snapshot = Snapshot()
         snapshot.appendSections([.main])
-        snapshot.appendItems(postManager.data, toSection: .main)
+        snapshot.appendItems(postManager.data.map{$0.id}, toSection: .main)
         dataSource.apply(snapshot, animatingDifferences: true)
     }
     
@@ -139,9 +139,10 @@ extension MainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem (at: indexPath) as? GifCollectionViewCell else { return }
         guard let gif = cell.imageView.image else { return }
+        guard let gifData = cell.getDataOfCell() else { return }
         
         let fullScreenGifVC = UIStoryboard(name: "FullScreenGif", bundle: .main).instantiateViewController(identifier: "FullScreenGif") { coder in
-            FullScreenGifViewController(coder: coder, image: gif)
+            FullScreenGifViewController(coder: coder, image: gif, data: gifData)
         }
         navigationController?.pushViewController(fullScreenGifVC, animated: true)
     }
@@ -167,7 +168,6 @@ extension MainViewController: MyTableViewDelegate {
         let firstActivityItem: Array = [data]
         let activityViewController:UIActivityViewController = UIActivityViewController(activityItems: firstActivityItem, applicationActivities: nil)
         self.present(activityViewController, animated: true, completion: nil)
-        
     }
     
     func saveToGalleryButton(with data: Data) {
@@ -186,9 +186,7 @@ extension MainViewController: MyTableViewDelegate {
                 }
             }
             self.present(refreshAlert, animated: true, completion: nil)
-            
-        }
-                                           ))
+        }))
         present(actionSheet, animated: true)
     }
 }
