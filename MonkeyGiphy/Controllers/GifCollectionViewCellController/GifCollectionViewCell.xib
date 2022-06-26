@@ -25,46 +25,16 @@
                         <rect key="frame" x="95" y="95.5" width="20" height="20"/>
                         <color key="color" systemColor="systemBlueColor"/>
                     </activityIndicatorView>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zZf-Jl-svC" userLabel="Share">
-                        <rect key="frame" x="157.5" y="177" width="49.5" height="31"/>
-                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                        <state key="normal" image="square.and.arrow.up" catalog="system">
-                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
-                        </state>
-                        <buttonConfiguration key="configuration" style="tinted" image="square.and.arrow.up" catalog="system" title=" ">
-                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large" weight="bold"/>
-                        </buttonConfiguration>
-                        <connections>
-                            <action selector="shareImageButton:" destination="gTV-IL-0wX" eventType="touchUpInside" id="EY7-On-h2h"/>
-                        </connections>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pdl-Qm-MWa" userLabel="SaveTpGallery">
-                        <rect key="frame" x="3" y="177" width="45" height="31"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="45" id="ckl-hv-Sb3"/>
-                        </constraints>
-                        <state key="normal" title="Button"/>
-                        <buttonConfiguration key="configuration" style="tinted" image="photo.on.rectangle" catalog="system" title=" ">
-                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large" weight="bold"/>
-                        </buttonConfiguration>
-                        <connections>
-                            <action selector="saveToGalleryButton:" destination="gTV-IL-0wX" eventType="touchUpInside" id="ITv-gw-JHG"/>
-                        </connections>
-                    </button>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
-                <constraint firstItem="sv2-Jl-TlL" firstAttribute="bottom" secondItem="zZf-Jl-svC" secondAttribute="bottom" id="1De-Zg-yxj"/>
                 <constraint firstItem="sv2-Jl-TlL" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="3" id="CX2-Vn-zgl"/>
-                <constraint firstItem="Pdl-Qm-MWa" firstAttribute="leading" secondItem="sv2-Jl-TlL" secondAttribute="leading" id="EBb-Gq-7zE"/>
-                <constraint firstItem="Pdl-Qm-MWa" firstAttribute="baseline" secondItem="zZf-Jl-svC" secondAttribute="baseline" id="Mcr-x4-GfZ"/>
                 <constraint firstAttribute="bottom" secondItem="sv2-Jl-TlL" secondAttribute="bottom" constant="3" id="NAb-A8-nL4"/>
                 <constraint firstItem="DD6-q0-BYC" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="him-Po-PVI"/>
                 <constraint firstAttribute="trailing" secondItem="sv2-Jl-TlL" secondAttribute="trailing" constant="3" id="p0d-4F-Cr1"/>
                 <constraint firstItem="DD6-q0-BYC" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="q14-N7-46j"/>
                 <constraint firstItem="sv2-Jl-TlL" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="3" id="rjM-16-bzo"/>
-                <constraint firstItem="sv2-Jl-TlL" firstAttribute="trailing" secondItem="zZf-Jl-svC" secondAttribute="trailing" id="xZu-uG-ucZ"/>
             </constraints>
             <size key="customSize" width="210" height="211"/>
             <connections>
@@ -75,8 +45,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="photo.on.rectangle" catalog="system" width="128" height="97"/>
-        <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

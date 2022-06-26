@@ -72,6 +72,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		BE030C2F2868757C009CA027 /* FullScreenViewController */ = {
+			isa = PBXGroup;
+			children = (
+				BE421ADA2846302300D2E827 /* FullScreenGifViewController.swift */,
+				BE421B052846382F00D2E827 /* FullScreenGif.storyboard */,
+			);
+			path = FullScreenViewController;
+			sourceTree = "<group>";
+		};
 		BE421B0728520D5000D2E827 /* GifCollectionViewCellController */ = {
 			isa = PBXGroup;
 			children = (
@@ -145,7 +154,6 @@
 				BE421B152852331000D2E827 /* LoadingView */,
 				BE421B0928520E4A00D2E827 /* LoadingCell */,
 				BEFFA36927F9E3D400BF743D /* LaunchScreen.storyboard */,
-				BE421B052846382F00D2E827 /* FullScreenGif.storyboard */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -164,7 +172,7 @@
 			children = (
 				BE421B0828520DB600D2E827 /* MainScreenViewController */,
 				BE421B0728520D5000D2E827 /* GifCollectionViewCellController */,
-				BE421ADA2846302300D2E827 /* FullScreenGifViewController.swift */,
+				BE030C2F2868757C009CA027 /* FullScreenViewController */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";

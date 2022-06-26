@@ -8,29 +8,20 @@
 import UIKit
 import SwiftGifOrigin
 
-
-protocol MyTableViewDelegate: AnyObject {
-    func shareImageButton(with data: Data )
-    func saveToGalleryButton(with data: Data)
-}
-
 class GifCollectionViewCell: UICollectionViewCell {
-    
+    private var data: Data?
+    private var task: URLSessionDataTask?
+    static let identifier = "GifCollectionViewCell"
     @IBOutlet var imageView: UIImageView! {
         didSet {
             imageView.layer.cornerRadius = 8.0
         }
     }
-    
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView! {
         didSet {
             activityIndicator.hidesWhenStopped = true
         }
     }
-    private var data: Data?
-    private var task: URLSessionDataTask?
-    weak var delegate: MyTableViewDelegate?
-    static let identifier = "GifCollectionViewCell"
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -62,16 +53,6 @@ class GifCollectionViewCell: UICollectionViewCell {
         }
         task.resume()
         self.task = task
-    }
-    
-    @IBAction func shareImageButton(_ sender: UIButton) {
-        guard let data = data else { return }
-        delegate?.shareImageButton(with: data)
-    }
-    
-    @IBAction func saveToGalleryButton(_ sender: UIButton) {
-        guard let data = data else { return }
-        delegate?.saveToGalleryButton(with: data)
     }
     
     static func nib() -> UINib {

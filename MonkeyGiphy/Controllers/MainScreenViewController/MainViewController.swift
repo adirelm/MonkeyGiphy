@@ -9,6 +9,11 @@ import UIKit
 import AVFAudio
 import Photos
 
+enum TrendingButtonStatus {
+    case trending
+    case other
+}
+
 enum GifSection: Int {
     case main
 }
@@ -19,13 +24,13 @@ class MainViewController: UIViewController, UISearchBarDelegate {
     
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet weak var navBar: UINavigationItem!
+    @IBOutlet weak var trendingBtn: UIButton!
     
     private lazy var searchController = setUpSearchController()
     private lazy var dataSource = makeDataSource()
     
     private var songPlayer: AVAudioPlayer?
-    private var postManager = PostManager()
-    private let defaultVal = "Cartoon"
+    private var postManager = PostManager.shared()
     
     //MARK: - LifeCycle
     
@@ -35,8 +40,9 @@ class MainViewController: UIViewController, UISearchBarDelegate {
         setUpNavBar()
         setUpCollectionView()
         hideKeyboardWhenTappedAround()
-        setUpSound()
-        postManager.fetchPhotos(query: defaultVal)
+//        setUpSound()
+        setButtonAttributes(buttonStatus: .trending)
+        postManager.fetchPhotos(fetchType: .trending, isPagination: false)
     }
     
     //MARK: - Diffable DataSource
@@ -51,12 +57,11 @@ class MainViewController: UIViewController, UISearchBarDelegate {
                 return cell
             }
             
-            let gifURLString = self.postManager.getGifUrlByIndexPath(for: indexPath)
+            guard let gifURLString = self.postManager.getGifUrlByIndexPath(for: indexPath) else { return UICollectionViewCell() }
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GifCollectionViewCell.identifier, for: indexPath) as? GifCollectionViewCell else {
                 return UICollectionViewCell()
             }
             cell.configure(with: gifURLString, session: self.postManager.session)
-            cell.delegate = self
             return cell
         }
         return dataSource
@@ -112,7 +117,21 @@ class MainViewController: UIViewController, UISearchBarDelegate {
         searchBar.resignFirstResponder()
         guard let text = searchBar.text  else { return }
         postManager.modifyDataSource(with: nil)
-        postManager.fetchPhotos(query: text)
+        postManager.fetchPhotosBySearch(query: text, isPagination: false)
+        setButtonAttributes(buttonStatus: .other)
+    }
+    
+    func setButtonAttributes(buttonStatus: TrendingButtonStatus) {
+        let font = UIFont(name: "HelveticaNeue-Bold", size: 14)!
+        switch buttonStatus {
+        case .trending:
+            trendingBtn.setAttributedTitle(NSAttributedString(string: "👇🏻 TRENDING GIFS! 👇🏻", attributes: [NSAttributedString.Key.font: font]), for: .normal)
+            trendingBtn.tintColor = .systemGreen
+            
+        case .other:
+            trendingBtn.setAttributedTitle(NSAttributedString(string: "CLICK FOR TRENDING GIFS!", attributes: [NSAttributedString.Key.font: font]), for: .normal)
+            trendingBtn.tintColor = .systemBlue
+        }
     }
     
     private func setUpSound() {
@@ -123,14 +142,29 @@ class MainViewController: UIViewController, UISearchBarDelegate {
         songPlayer?.prepareToPlay()
         songPlayer?.play()
     }
+    
+    @IBAction func trendingBtnClicked(_ sender: UIButton) {
+        if trendingBtn.tintColor == .systemBlue {
+            postManager.modifyDataSource(with: nil)
+            postManager.fetchPhotos(fetchType: .trending, isPagination: false)
+            setButtonAttributes(buttonStatus: .trending)
+            searchController.searchBar.text = ""
+        }
+    }
 }
 
 extension MainViewController: PostManagerDelegate {
     func didUpdateData(postManager: PostManager?, postGifData: GiphyResponse) {
         guard let postManager = postManager else { return }
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
             postManager.modifyDataSource(with: postGifData.data)
-            self.applySnapshot()
+            self?.applySnapshot()
+        }
+    }
+    
+    func handleScrollToTop() {
+        DispatchQueue.main.async { [weak self] in
+            self?.collectionView.setContentOffset(.zero, animated: true)
         }
     }
 }
@@ -146,9 +180,7 @@ extension MainViewController: UICollectionViewDelegate {
         }
         navigationController?.pushViewController(fullScreenGifVC, animated: true)
     }
-}
-
-extension MainViewController {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         postManager.isLoading ? postManager.data.count + 1 : postManager.data.count
     }
@@ -157,37 +189,9 @@ extension MainViewController {
         guard indexPath.item == postManager.data.count - 2 else { return }
         guard let searchText = searchController.searchBar.text else { return }
         if !searchText.trimmingCharacters(in: .whitespaces).isEmpty {
-            postManager.fetchPhotos(query: searchText)
+            postManager.fetchPhotosBySearch(query: searchText, isPagination: true)
             return
-        } else { postManager.fetchPhotos(query: defaultVal) }
-    }
-}
-
-extension MainViewController: MyTableViewDelegate {
-    func shareImageButton(with data: Data) {
-        let firstActivityItem: Array = [data]
-        let activityViewController:UIActivityViewController = UIActivityViewController(activityItems: firstActivityItem, applicationActivities: nil)
-        self.present(activityViewController, animated: true, completion: nil)
-    }
-    
-    func saveToGalleryButton(with data: Data) {
-        let actionSheet = UIAlertController(title: "Save gif to Camera Roll?", message: nil, preferredStyle: .actionSheet)
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        actionSheet.addAction(UIAlertAction(title: "Save!", style: .destructive, handler: {_ in
-            let refreshAlert = UIAlertController(title: "Yay!", message: "Gif saved to Camera Roll!", preferredStyle: UIAlertController.Style.alert)
-            refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            
-            PHPhotoLibrary.shared().performChanges({
-                let request = PHAssetCreationRequest.forAsset()
-                request.addResource(with: .photo, data: data, options: nil)
-            }) { (success, error) in
-                if error == nil {
-                    return
-                }
-            }
-            self.present(refreshAlert, animated: true, completion: nil)
-        }))
-        present(actionSheet, animated: true)
+        } else { postManager.fetchPhotos(fetchType: .trending, isPagination: true) }
     }
 }
 
