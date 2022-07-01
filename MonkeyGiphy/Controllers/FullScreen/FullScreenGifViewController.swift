@@ -13,8 +13,10 @@ class FullScreenGifViewController: UIViewController {
     @IBOutlet weak var navBar: UINavigationItem!
     @IBOutlet weak var gifImageView: UIImageView!
     @IBOutlet weak var lblSuggested: UILabel!
+    @IBOutlet weak var btnFavorite: UIButton!
     private let image: UIImage
     private let data: Data
+    private let gifURL: String
     private let postManager = PostManager.shared()
     
     override func viewDidLoad() {
@@ -26,11 +28,13 @@ class FullScreenGifViewController: UIViewController {
         configureSuggestedLabel()
         setUpDelegates()
         setUpCollectionView()
+        setUpFavoriteBtn()
     }
     
-    init?(coder: NSCoder, image: UIImage, data: Data) {
+    init?(coder: NSCoder, image: UIImage, data: Data, url: String) {
         self.image = image
         self.data = data
+        self.gifURL = url
         super.init(coder: coder)
     }
     
@@ -54,6 +58,17 @@ class FullScreenGifViewController: UIViewController {
         collectionView.dataSource = self
     }
     
+    private func setUpFavoriteBtn() {
+        if postManager.favorites.contains(where: { url in
+            url == gifURL
+        }) {
+            btnFavorite.setImage(UIImage(systemName: "star.fill"), for: .normal)
+        }
+        else {
+            btnFavorite.setImage(UIImage(systemName: "star"), for: .normal)
+        }
+    }
+    
     private func configureSuggestedLabel() {
         lblSuggested.adjustsFontSizeToFitWidth = true
     }
@@ -68,7 +83,7 @@ class FullScreenGifViewController: UIViewController {
         self.view.addGestureRecognizer(swipeRight)
     }
     
-    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+    @objc private func respondToSwipeGesture(gesture: UIGestureRecognizer) {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
             switch swipeGesture.direction {
             case UISwipeGestureRecognizer.Direction.right:
@@ -87,6 +102,11 @@ class FullScreenGifViewController: UIViewController {
         appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         navBar.standardAppearance = appearance;
         navBar.scrollEdgeAppearance = navBar.standardAppearance
+    }
+    
+    @IBAction func favoriteBtnClicked(_ sender: Any) {
+        postManager.modifyFavorites(with: gifURL)
+        setUpFavoriteBtn()
     }
     
     @IBAction private func saveToGalleryButton(_ sender: UIButton) {
@@ -129,11 +149,12 @@ class FullScreenGifViewController: UIViewController {
 extension FullScreenGifViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem (at: indexPath) as? GifCollectionViewCell else { return }
-        guard let gif = cell.imageView.image else { return }
+        guard let gifImage = cell.imageView.image else { return }
         guard let gifData = cell.getDataOfCell() else { return }
+        guard let gifURL = cell.getGifURLOfCell() else { return }
         
         let fullScreenGifVC = UIStoryboard(name: "FullScreenGif", bundle: .main).instantiateViewController(identifier: "FullScreenGif") { coder in
-            FullScreenGifViewController(coder: coder, image: gif, data: gifData)
+            FullScreenGifViewController(coder: coder, image: gifImage, data: gifData, url: gifURL)
         }
         navigationController?.pushViewController(fullScreenGifVC, animated: true)
     }
@@ -143,7 +164,7 @@ extension FullScreenGifViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let gifURLString = self.postManager.getRandomUrl(for: indexPath) else { return UICollectionViewCell() }
+        guard let gifURLString = self.postManager.getRandomUrlFromDataSource(for: indexPath) else { return UICollectionViewCell() }
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GifCollectionViewCell.identifier, for: indexPath) as? GifCollectionViewCell else {
             return UICollectionViewCell()
         }

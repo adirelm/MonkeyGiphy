@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="C7o-QX-z80">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="C4c-jM-QNu">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -83,12 +83,81 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="947.82608695652186" y="81.696428571428569"/>
+            <point key="canvasLocation" x="-1442" y="1669"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--⭐️ Favorites ⭐️-->
+        <scene sceneID="2By-Ue-wGx">
+            <objects>
+                <viewController id="xhc-OB-Mhh" customClass="FavoritesViewController" customModule="MonkeyGiphy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="j4z-e7-RsC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="o13-do-BGz">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ofg-Sc-YCy">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="dcK-LJ-UEq">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="LWR-ed-JKA" customClass="GifCollectionViewCell" customModule="MonkeyGiphy" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="58F-IW-5UE"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="58F-IW-5UE" firstAttribute="bottom" secondItem="o13-do-BGz" secondAttribute="bottom" id="9r0-pd-CkC"/>
+                            <constraint firstItem="o13-do-BGz" firstAttribute="leading" secondItem="58F-IW-5UE" secondAttribute="leading" id="EVC-We-qYe"/>
+                            <constraint firstItem="58F-IW-5UE" firstAttribute="trailing" secondItem="o13-do-BGz" secondAttribute="trailing" id="Lg4-EJ-Vy3"/>
+                            <constraint firstItem="o13-do-BGz" firstAttribute="top" secondItem="58F-IW-5UE" secondAttribute="top" id="dY6-61-9C5"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="⭐️ Favorites ⭐️" id="xEC-Tm-wr2"/>
+                    <connections>
+                        <outlet property="collectionView" destination="o13-do-BGz" id="h3j-KV-y7Z"/>
+                        <outlet property="navBar" destination="xEC-Tm-wr2" id="zL7-nv-woh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="w5X-8G-kUh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-500" y="1669"/>
+        </scene>
+        <!--Tab Bar View Contoller-->
+        <scene sceneID="J72-ea-rgk">
+            <objects>
+                <tabBarController id="C4c-jM-QNu" customClass="TabBarViewContoller" customModule="MonkeyGiphy" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="n0u-XI-TGJ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="C7o-QX-z80" kind="relationship" relationship="viewControllers" id="KVr-HH-b6k"/>
+                        <segue destination="Uot-Um-A7x" kind="relationship" relationship="viewControllers" id="hdk-nb-WeS"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xhh-P1-qf5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-961" y="86"/>
+        </scene>
+        <!--Home-->
         <scene sceneID="cRk-eU-G7U">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="C7o-QX-z80" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Home" image="homekit" catalog="system" selectedImage="homekit" id="bCB-QG-2UD">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="-100" vertical="0.0"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleAspectFit" id="JP4-qv-hNU">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -108,10 +177,32 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="enE-ZD-ukb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="37.681159420289859" y="81.696428571428569"/>
+            <point key="canvasLocation" x="-1442" y="814"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="jBD-aN-PCb">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Uot-Um-A7x" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" systemItem="favorites" id="uCy-tT-yZK">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
+                    </tabBarItem>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="H1x-Ze-Mbp">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="xhc-OB-Mhh" kind="relationship" relationship="rootViewController" id="2nN-cq-WgE"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zeq-8u-653" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-499" y="814"/>
         </scene>
     </scenes>
     <resources>
+        <image name="homekit" catalog="system" width="128" height="106"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

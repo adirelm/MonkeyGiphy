@@ -11,20 +11,15 @@ import SwiftGifOrigin
 class GifCollectionViewCell: UICollectionViewCell {
     private var data: Data?
     private var task: URLSessionDataTask?
+    private var gifURL: String?
     static let identifier = "GifCollectionViewCell"
-    @IBOutlet var imageView: UIImageView! {
-        didSet {
-            imageView.layer.cornerRadius = 8.0
-        }
-    }
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView! {
-        didSet {
-            activityIndicator.hidesWhenStopped = true
-        }
-    }
+    @IBOutlet var imageView: UIImageView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        setImageView()
+        setActivittyIndicator()
     }
     
     override func prepareForReuse() {
@@ -34,9 +29,22 @@ class GifCollectionViewCell: UICollectionViewCell {
         imageView.image = nil
     }
     
+    private func setImageView() {
+        self.imageView.layer.cornerRadius = 8.0
+    }
+    
+    private func setActivittyIndicator() {
+        self.activityIndicator.hidesWhenStopped = true
+    }
+    
     func getDataOfCell() -> Data? {
         guard let data = data else { return nil }
         return data
+    }
+    
+    func getGifURLOfCell() -> String? {
+        guard let url = gifURL else { return nil }
+        return url
     }
     
     func configure(with urlString: String, session: URLSession) {
@@ -48,6 +56,7 @@ class GifCollectionViewCell: UICollectionViewCell {
                 let gif = UIImage.gif(data: data)
                 self?.imageView.image = gif
                 self?.data = data
+                self?.gifURL = urlString
                 self?.activityIndicator.stopAnimating()
             }
         }

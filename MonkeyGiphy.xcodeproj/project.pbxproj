@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		78544C3528DA0463CF2B2E94 /* Pods_MonkeyGiphy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F83352F2B23A907C23E13B4D /* Pods_MonkeyGiphy.framework */; };
+		BE0EE4EC286F0498008BD48C /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE0EE4EB286F0498008BD48C /* FavoritesViewController.swift */; };
+		BE3D2F8E286B094500FE923D /* TabBarViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3D2F8D286B094500FE923D /* TabBarViewContoller.swift */; };
 		BE421ADC2846302300D2E827 /* FullScreenGifViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE421ADA2846302300D2E827 /* FullScreenGifViewController.swift */; };
 		BE421B062846382F00D2E827 /* FullScreenGif.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE421B052846382F00D2E827 /* FullScreenGif.storyboard */; };
 		BE421B1028520F8700D2E827 /* LoadingIndicatorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE421B0E28520F8700D2E827 /* LoadingIndicatorCollectionViewCell.swift */; };
@@ -27,6 +29,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BE0EE4EB286F0498008BD48C /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		BE3D2F8D286B094500FE923D /* TabBarViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewContoller.swift; sourceTree = "<group>"; };
 		BE421ADA2846302300D2E827 /* FullScreenGifViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenGifViewController.swift; sourceTree = "<group>"; };
 		BE421B052846382F00D2E827 /* FullScreenGif.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FullScreenGif.storyboard; sourceTree = "<group>"; };
 		BE421B0E28520F8700D2E827 /* LoadingIndicatorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicatorCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -72,31 +76,47 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		BE030C2F2868757C009CA027 /* FullScreenViewController */ = {
+		BE030C2F2868757C009CA027 /* FullScreen */ = {
 			isa = PBXGroup;
 			children = (
 				BE421ADA2846302300D2E827 /* FullScreenGifViewController.swift */,
 				BE421B052846382F00D2E827 /* FullScreenGif.storyboard */,
 			);
-			path = FullScreenViewController;
+			path = FullScreen;
 			sourceTree = "<group>";
 		};
-		BE421B0728520D5000D2E827 /* GifCollectionViewCellController */ = {
+		BE0EE4EA286F0395008BD48C /* Favorites */ = {
+			isa = PBXGroup;
+			children = (
+				BE0EE4EB286F0498008BD48C /* FavoritesViewController.swift */,
+			);
+			path = Favorites;
+			sourceTree = "<group>";
+		};
+		BE3D2F8F286B094E00FE923D /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				BE3D2F8D286B094500FE923D /* TabBarViewContoller.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		BE421B0728520D5000D2E827 /* GifCell */ = {
 			isa = PBXGroup;
 			children = (
 				BEFFA37227F9E76400BF743D /* GifCollectionViewCell.swift */,
 				BEFFA37327F9E76400BF743D /* GifCollectionViewCell.xib */,
 			);
-			path = GifCollectionViewCellController;
+			path = GifCell;
 			sourceTree = "<group>";
 		};
-		BE421B0828520DB600D2E827 /* MainScreenViewController */ = {
+		BE421B0828520DB600D2E827 /* MainScreen */ = {
 			isa = PBXGroup;
 			children = (
 				BEFFA36427F9E3D200BF743D /* Main.storyboard */,
 				BEFFA36227F9E3D200BF743D /* MainViewController.swift */,
 			);
-			path = MainScreenViewController;
+			path = MainScreen;
 			sourceTree = "<group>";
 		};
 		BE421B0928520E4A00D2E827 /* LoadingCell */ = {
@@ -111,6 +131,7 @@
 		BE421B152852331000D2E827 /* LoadingView */ = {
 			isa = PBXGroup;
 			children = (
+				BEFFA36927F9E3D400BF743D /* LaunchScreen.storyboard */,
 			);
 			path = LoadingView;
 			sourceTree = "<group>";
@@ -153,7 +174,6 @@
 			children = (
 				BE421B152852331000D2E827 /* LoadingView */,
 				BE421B0928520E4A00D2E827 /* LoadingCell */,
-				BEFFA36927F9E3D400BF743D /* LaunchScreen.storyboard */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -170,9 +190,11 @@
 		BEFFA37827F9ECAB00BF743D /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				BE421B0828520DB600D2E827 /* MainScreenViewController */,
-				BE421B0728520D5000D2E827 /* GifCollectionViewCellController */,
-				BE030C2F2868757C009CA027 /* FullScreenViewController */,
+				BE0EE4EA286F0395008BD48C /* Favorites */,
+				BE421B0828520DB600D2E827 /* MainScreen */,
+				BE421B0728520D5000D2E827 /* GifCell */,
+				BE030C2F2868757C009CA027 /* FullScreen */,
+				BE3D2F8F286B094E00FE923D /* TabBar */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -319,11 +341,13 @@
 			files = (
 				BEFFA36327F9E3D200BF743D /* MainViewController.swift in Sources */,
 				BEFFA35F27F9E3D200BF743D /* AppDelegate.swift in Sources */,
+				BE3D2F8E286B094500FE923D /* TabBarViewContoller.swift in Sources */,
 				BEFFA36127F9E3D200BF743D /* SceneDelegate.swift in Sources */,
 				BE421ADC2846302300D2E827 /* FullScreenGifViewController.swift in Sources */,
 				BEFFA37427F9E76400BF743D /* GifCollectionViewCell.swift in Sources */,
 				BE421B1028520F8700D2E827 /* LoadingIndicatorCollectionViewCell.swift in Sources */,
 				BEFFA37E27F9EEC800BF743D /* GiphyResponse.swift in Sources */,
+				BE0EE4EC286F0498008BD48C /* FavoritesViewController.swift in Sources */,
 				BED9A1D627FB3DA8009D68DE /* PostManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

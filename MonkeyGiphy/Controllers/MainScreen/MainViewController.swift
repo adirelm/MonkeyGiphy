@@ -57,7 +57,7 @@ class MainViewController: UIViewController, UISearchBarDelegate {
                 return cell
             }
             
-            guard let gifURLString = self.postManager.getGifUrlByIndexPath(for: indexPath) else { return UICollectionViewCell() }
+            guard let gifURLString = self.postManager.getGifUrlByIndexPathFromDataSource(for: indexPath) else { return UICollectionViewCell() }
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GifCollectionViewCell.identifier, for: indexPath) as? GifCollectionViewCell else {
                 return UICollectionViewCell()
             }
@@ -74,7 +74,7 @@ class MainViewController: UIViewController, UISearchBarDelegate {
         dataSource.apply(snapshot, animatingDifferences: true)
     }
     
-    func setUpSearchController() -> UISearchController {
+    private func setUpSearchController() -> UISearchController {
         let searchController = UISearchController()
         searchController.searchBar.searchBarStyle = .default
         searchController.searchBar.placeholder = "e.g 'Monkey'"
@@ -113,6 +113,15 @@ class MainViewController: UIViewController, UISearchBarDelegate {
         postManager.delegate = self
     }
     
+    private func setUpSound() {
+        guard let path = Bundle.main.path(forResource: "song", ofType: "wav") else { return }
+        let filePath = NSURL(fileURLWithPath:path)
+        songPlayer = try! AVAudioPlayer.init(contentsOf: filePath as URL)
+        songPlayer?.numberOfLoops = -1 //logic for infinite loop
+        songPlayer?.prepareToPlay()
+        songPlayer?.play()
+    }
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         guard let text = searchBar.text  else { return }
@@ -132,15 +141,6 @@ class MainViewController: UIViewController, UISearchBarDelegate {
             trendingBtn.setAttributedTitle(NSAttributedString(string: "CLICK FOR TRENDING GIFS!", attributes: [NSAttributedString.Key.font: font]), for: .normal)
             trendingBtn.tintColor = .systemBlue
         }
-    }
-    
-    private func setUpSound() {
-        guard let path = Bundle.main.path(forResource: "song", ofType: "wav") else { return }
-        let filePath = NSURL(fileURLWithPath:path)
-        songPlayer = try! AVAudioPlayer.init(contentsOf: filePath as URL)
-        songPlayer?.numberOfLoops = -1 //logic for infinite loop
-        songPlayer?.prepareToPlay()
-        songPlayer?.play()
     }
     
     @IBAction func trendingBtnClicked(_ sender: UIButton) {
@@ -172,11 +172,12 @@ extension MainViewController: PostManagerDelegate {
 extension MainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem (at: indexPath) as? GifCollectionViewCell else { return }
-        guard let gif = cell.imageView.image else { return }
+        guard let gifImage = cell.imageView.image else { return }
         guard let gifData = cell.getDataOfCell() else { return }
+        guard let gifURL = cell.getGifURLOfCell() else { return }
         
         let fullScreenGifVC = UIStoryboard(name: "FullScreenGif", bundle: .main).instantiateViewController(identifier: "FullScreenGif") { coder in
-            FullScreenGifViewController(coder: coder, image: gif, data: gifData)
+            FullScreenGifViewController(coder: coder, image: gifImage, data: gifData, url: gifURL)
         }
         navigationController?.pushViewController(fullScreenGifVC, animated: true)
     }

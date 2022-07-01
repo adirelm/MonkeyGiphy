@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import UIKit
+import Combine
 
 enum ApiFetchType {
     case trending
@@ -20,10 +20,10 @@ protocol PostManagerDelegate {
 class PostManager {
     
     private static var postManager = PostManager()
-    
     var delegate: PostManagerDelegate?
     
     private(set) var data: [GifData] = []
+    @Published private(set) var favorites: [String] = []
     private(set) var isLoading = false
     
     lazy var session: URLSession = {
@@ -39,6 +39,18 @@ class PostManager {
         return postManager
     }
     
+    func modifyFavorites(with url: String) {
+        let indexOfElement = self.favorites.firstIndex { gifURL in
+            gifURL == url
+        }
+        
+        if let indexOfElement = indexOfElement {
+            self.favorites.remove(at: indexOfElement)
+        } else {
+            self.favorites.append(url)
+        }
+    }
+
     func modifyDataSource(with data: [GifData]?) {
         if let data = data {
             self.data += data
@@ -94,12 +106,17 @@ class PostManager {
         task.resume()
     }
     
-    func getGifUrlByIndexPath(for indexPath: IndexPath) -> String? {
+    func getGifUrlByIndexPathFromDataSource(for indexPath: IndexPath) -> String? {
         guard indexPath.row <= data.count else { return nil }
         return self.data[indexPath.row].images.downsized.url
     }
     
-    func getRandomUrl(for indexPath: IndexPath) -> String? {
+    func getGifUrlByIndexPathFromFavorites(for indexPath: IndexPath) -> String? {
+        guard indexPath.row <= favorites.count else { return nil }
+        return self.favorites[indexPath.row]
+    }
+    
+    func getRandomUrlFromDataSource(for indexPath: IndexPath) -> String? {
         guard indexPath.row <= data.count else { return nil }
         let randomIndex = Int.random(in: 0..<data.count)
         return self.data[randomIndex].images.downsized.url
