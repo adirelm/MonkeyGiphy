@@ -9,7 +9,7 @@ import UIKit
 import SwiftGifOrigin
 
 class GifCollectionViewCell: UICollectionViewCell {
-//    private let viewModel = GifCollectionViewModel()
+    private let viewModel = GifCollectionViewModel()
     var data: Data?
     var task: URLSessionDataTask?
     var gifURL: String?
@@ -25,11 +25,11 @@ class GifCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-//        viewModel.task?.cancel()
-//        viewModel.task = nil
+        viewModel.task?.cancel()
+        viewModel.task = nil
         imageView.image = nil
-        task?.cancel()
-        task = nil
+//        task?.cancel()
+//        task = nil
     }
     
     private func setImageView() {
@@ -41,49 +41,48 @@ class GifCollectionViewCell: UICollectionViewCell {
     }
     
     func getDataOfCell() -> Data? {
-//        guard let data = viewModel.data else { return nil }
-//        return data
-        
-        guard let data = data else { return nil }
+        guard let data = viewModel.data else { return nil }
         return data
+        
+//        guard let data = data else { return nil }
+//        return data
     }
     
     func getGifURLOfCell() -> String? {
-//        guard let url = viewModel.gifURL else { return nil }
-//        return url
-        
-        guard let url = gifURL else { return nil }
+        guard let url = viewModel.gifURL else { return nil }
         return url
-    }
-    
-    func configure(with urlString: String, session: URLSession) {
-        self.activityIndicator.startAnimating()
-//        viewModel.configure(with: urlString, session: session)
-        guard let url = URL(string: urlString) else { return }
-        let task = session.dataTask(with: url) { [weak self] data, _, error in
-            guard let data = data, error == nil else { return }
-            DispatchQueue.main.async {
-                let gif = UIImage.gif(data: data)
-                self?.imageView.image = gif
-                self?.data = data
-                self?.gifURL = urlString
-                self?.activityIndicator.stopAnimating()
-            }
-        }
-        task.resume()
-        self.task = task
+        
+//        guard let url = gifURL else { return nil }
+//        return url
     }
     
 //    func configure(with urlString: String, session: URLSession) {
 //        self.activityIndicator.startAnimating()
-//        viewModel.configure(with: urlString, session: session)
-//        guard let data = self.viewModel.data else { return }
-//        DispatchQueue.main.async { [weak self] in
-//            let gifImage = UIImage.gif(data: data)
-//            self?.imageView.image = gifImage
-//            self?.activityIndicator.stopAnimating()
+//        guard let url = URL(string: urlString) else { return }
+//        let task = session.dataTask(with: url) { [weak self] data, _, error in
+//            guard let data = data, error == nil else { return }
+//            DispatchQueue.main.async {
+//                let gif = UIImage.gif(data: data)
+//                self?.imageView.image = gif
+//                self?.data = data
+//                self?.gifURL = urlString
+//                self?.activityIndicator.stopAnimating()
+//            }
 //        }
+//        task.resume()
+//        self.task = task
 //    }
+    
+    func configure(with urlString: String, session: URLSession) {
+        self.activityIndicator.startAnimating()
+        viewModel.configure(with: urlString, session: session)
+        guard let data = self.viewModel.data else { return }
+        DispatchQueue.main.async { [weak self] in
+            let gifImage = UIImage.gif(data: data)
+            self?.imageView.image = gifImage
+            self?.activityIndicator.stopAnimating()
+        }
+    }
     
     
     
