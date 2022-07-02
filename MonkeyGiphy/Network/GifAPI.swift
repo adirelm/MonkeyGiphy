@@ -12,15 +12,15 @@ enum ApiFetchType {
     case trending
 }
 
-protocol PostManagerDelegate {
-    func didUpdateData(postManager: PostManager?, postGifData: GiphyResponse )
+protocol GifAPIDelegate {
+    func didUpdateData(postManager: GifAPI?, postGifData: GiphyResponse )
     func handleScrollToTop()
 }
 
-class PostManager {
+class GifAPI {
     
-    private static var postManager = PostManager()
-    var delegate: PostManagerDelegate?
+    private static var gifAPI = GifAPI()
+    var delegate: GifAPIDelegate?
     
     private(set) var data: [GifData] = []
     @Published private(set) var favorites: [String] = []
@@ -35,8 +35,8 @@ class PostManager {
     
     private init() {}
     
-    static func shared() -> PostManager {
-        return postManager
+    static func shared() -> GifAPI {
+        return gifAPI
     }
     
     func modifyFavorites(with url: String) {

@@ -14,7 +14,7 @@
 		BE421B062846382F00D2E827 /* FullScreenGif.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE421B052846382F00D2E827 /* FullScreenGif.storyboard */; };
 		BE421B1028520F8700D2E827 /* LoadingIndicatorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE421B0E28520F8700D2E827 /* LoadingIndicatorCollectionViewCell.swift */; };
 		BE421B1128520F8700D2E827 /* LoadingIndicatorCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE421B0F28520F8700D2E827 /* LoadingIndicatorCollectionViewCell.xib */; };
-		BED9A1D627FB3DA8009D68DE /* PostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED9A1D527FB3DA8009D68DE /* PostManager.swift */; };
+		BED9A1D627FB3DA8009D68DE /* GifAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED9A1D527FB3DA8009D68DE /* GifAPI.swift */; };
 		BEFFA35F27F9E3D200BF743D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFFA35E27F9E3D200BF743D /* AppDelegate.swift */; };
 		BEFFA36127F9E3D200BF743D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFFA36027F9E3D200BF743D /* SceneDelegate.swift */; };
 		BEFFA36327F9E3D200BF743D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFFA36227F9E3D200BF743D /* MainViewController.swift */; };
@@ -35,7 +35,7 @@
 		BE421B052846382F00D2E827 /* FullScreenGif.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FullScreenGif.storyboard; sourceTree = "<group>"; };
 		BE421B0E28520F8700D2E827 /* LoadingIndicatorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicatorCollectionViewCell.swift; sourceTree = "<group>"; };
 		BE421B0F28520F8700D2E827 /* LoadingIndicatorCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingIndicatorCollectionViewCell.xib; sourceTree = "<group>"; };
-		BED9A1D527FB3DA8009D68DE /* PostManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostManager.swift; sourceTree = "<group>"; };
+		BED9A1D527FB3DA8009D68DE /* GifAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifAPI.swift; sourceTree = "<group>"; };
 		BEFFA35B27F9E3D200BF743D /* MonkeyGiphy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MonkeyGiphy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEFFA35E27F9E3D200BF743D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BEFFA36027F9E3D200BF743D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -91,6 +91,14 @@
 				BE0EE4EB286F0498008BD48C /* FavoritesViewController.swift */,
 			);
 			path = Favorites;
+			sourceTree = "<group>";
+		};
+		BE0EE4EF2870AD45008BD48C /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				BED9A1D527FB3DA8009D68DE /* GifAPI.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		BE3D2F8F286B094E00FE923D /* TabBar */ = {
@@ -159,6 +167,7 @@
 			children = (
 				BEFFA35E27F9E3D200BF743D /* AppDelegate.swift */,
 				BEFFA36027F9E3D200BF743D /* SceneDelegate.swift */,
+				BE0EE4EF2870AD45008BD48C /* Network */,
 				BEFFA37727F9ECA300BF743D /* Model */,
 				BEFFA37827F9ECAB00BF743D /* Controllers */,
 				BEFFA37627F9EC9200BF743D /* Views */,
@@ -182,7 +191,6 @@
 			isa = PBXGroup;
 			children = (
 				BEFFA37D27F9EEC800BF743D /* GiphyResponse.swift */,
-				BED9A1D527FB3DA8009D68DE /* PostManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -348,7 +356,7 @@
 				BE421B1028520F8700D2E827 /* LoadingIndicatorCollectionViewCell.swift in Sources */,
 				BEFFA37E27F9EEC800BF743D /* GiphyResponse.swift in Sources */,
 				BE0EE4EC286F0498008BD48C /* FavoritesViewController.swift in Sources */,
-				BED9A1D627FB3DA8009D68DE /* PostManager.swift in Sources */,
+				BED9A1D627FB3DA8009D68DE /* GifAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

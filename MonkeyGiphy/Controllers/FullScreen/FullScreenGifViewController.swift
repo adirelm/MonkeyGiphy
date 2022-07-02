@@ -17,7 +17,7 @@ class FullScreenGifViewController: UIViewController {
     private let image: UIImage
     private let data: Data
     private let gifURL: String
-    private let postManager = PostManager.shared()
+    private let postManager = GifAPI.shared()
     
     override func viewDidLoad() {
         super.viewDidLoad()

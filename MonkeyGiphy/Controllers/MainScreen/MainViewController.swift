@@ -30,7 +30,7 @@ class MainViewController: UIViewController, UISearchBarDelegate {
     private lazy var dataSource = makeDataSource()
     
     private var songPlayer: AVAudioPlayer?
-    private var postManager = PostManager.shared()
+    private var gifAPI = GifAPI.shared()
     
     //MARK: - LifeCycle
     
@@ -42,7 +42,7 @@ class MainViewController: UIViewController, UISearchBarDelegate {
         hideKeyboardWhenTappedAround()
 //        setUpSound()
         setButtonAttributes(buttonStatus: .trending)
-        postManager.fetchPhotos(fetchType: .trending, isPagination: false)
+        gifAPI.fetchPhotos(fetchType: .trending, isPagination: false)
     }
     
     //MARK: - Diffable DataSource
@@ -51,17 +51,17 @@ class MainViewController: UIViewController, UISearchBarDelegate {
             
             guard let self = self else { return UICollectionViewCell() }
 
-            if self.postManager.isLoading {
+            if self.gifAPI.isLoading {
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LoadingIndicatorCollectionViewCell.identifier, for: indexPath) as? LoadingIndicatorCollectionViewCell else { return UICollectionViewCell() }
                 cell.activityIndicator.startAnimating()
                 return cell
             }
             
-            guard let gifURLString = self.postManager.getGifUrlByIndexPathFromDataSource(for: indexPath) else { return UICollectionViewCell() }
+            guard let gifURLString = self.gifAPI.getGifUrlByIndexPathFromDataSource(for: indexPath) else { return UICollectionViewCell() }
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GifCollectionViewCell.identifier, for: indexPath) as? GifCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            cell.configure(with: gifURLString, session: self.postManager.session)
+            cell.configure(with: gifURLString, session: self.gifAPI.session)
             return cell
         }
         return dataSource
@@ -70,7 +70,7 @@ class MainViewController: UIViewController, UISearchBarDelegate {
     private func applySnapshot() {
         var snapshot = Snapshot()
         snapshot.appendSections([.main])
-        snapshot.appendItems(postManager.data.map{$0.id}, toSection: .main)
+        snapshot.appendItems(gifAPI.data.map{$0.id}, toSection: .main)
         dataSource.apply(snapshot, animatingDifferences: true)
     }
     
@@ -110,7 +110,7 @@ class MainViewController: UIViewController, UISearchBarDelegate {
     
     private func setUpDelegates() {
         collectionView.delegate = self
-        postManager.delegate = self
+        gifAPI.delegate = self
     }
     
     private func setUpSound() {
@@ -125,8 +125,8 @@ class MainViewController: UIViewController, UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         guard let text = searchBar.text  else { return }
-        postManager.modifyDataSource(with: nil)
-        postManager.fetchPhotosBySearch(query: text, isPagination: false)
+        gifAPI.modifyDataSource(with: nil)
+        gifAPI.fetchPhotosBySearch(query: text, isPagination: false)
         setButtonAttributes(buttonStatus: .other)
     }
     
@@ -145,16 +145,16 @@ class MainViewController: UIViewController, UISearchBarDelegate {
     
     @IBAction func trendingBtnClicked(_ sender: UIButton) {
         if trendingBtn.tintColor == .systemBlue {
-            postManager.modifyDataSource(with: nil)
-            postManager.fetchPhotos(fetchType: .trending, isPagination: false)
+            gifAPI.modifyDataSource(with: nil)
+            gifAPI.fetchPhotos(fetchType: .trending, isPagination: false)
             setButtonAttributes(buttonStatus: .trending)
             searchController.searchBar.text = ""
         }
     }
 }
 
-extension MainViewController: PostManagerDelegate {
-    func didUpdateData(postManager: PostManager?, postGifData: GiphyResponse) {
+extension MainViewController: GifAPIDelegate {
+    func didUpdateData(postManager: GifAPI?, postGifData: GiphyResponse) {
         guard let postManager = postManager else { return }
         DispatchQueue.main.async { [weak self] in
             postManager.modifyDataSource(with: postGifData.data)
@@ -183,16 +183,16 @@ extension MainViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        postManager.isLoading ? postManager.data.count + 1 : postManager.data.count
+        gifAPI.isLoading ? gifAPI.data.count + 1 : gifAPI.data.count
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard indexPath.item == postManager.data.count - 2 else { return }
+        guard indexPath.item == gifAPI.data.count - 2 else { return }
         guard let searchText = searchController.searchBar.text else { return }
         if !searchText.trimmingCharacters(in: .whitespaces).isEmpty {
-            postManager.fetchPhotosBySearch(query: searchText, isPagination: true)
+            gifAPI.fetchPhotosBySearch(query: searchText, isPagination: true)
             return
-        } else { postManager.fetchPhotos(fetchType: .trending, isPagination: true) }
+        } else { gifAPI.fetchPhotos(fetchType: .trending, isPagination: true) }
     }
 }
 

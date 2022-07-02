@@ -13,7 +13,7 @@ class FavoritesViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var navBar: UINavigationItem!
-    private let postManager = PostManager.shared()
+    private let gifAPI = GifAPI.shared()
     private var subscriptions = Set<AnyCancellable>()
     
     override func viewDidLoad() {
@@ -29,7 +29,7 @@ class FavoritesViewController: UIViewController {
     }
     
     private func addObservers() {
-        postManager.$favorites.sink { [weak self] _ in
+        gifAPI.$favorites.sink { [weak self] _ in
             self?.collectionView.reloadData()
         }.store(in: &subscriptions)
     }
@@ -69,15 +69,15 @@ extension FavoritesViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return postManager.favorites.count
+        return gifAPI.favorites.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let gifURLString = self.postManager.getGifUrlByIndexPathFromFavorites(for: indexPath) else { return UICollectionViewCell() }
+        guard let gifURLString = self.gifAPI.getGifUrlByIndexPathFromFavorites(for: indexPath) else { return UICollectionViewCell() }
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GifCollectionViewCell.identifier, for: indexPath) as? GifCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.configure(with: gifURLString, session: self.postManager.session)
+        cell.configure(with: gifURLString, session: self.gifAPI.session)
         return cell
     }
 }
