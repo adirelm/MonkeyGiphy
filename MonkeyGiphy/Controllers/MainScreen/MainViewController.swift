@@ -154,10 +154,9 @@ class MainViewController: UIViewController, UISearchBarDelegate {
 }
 
 extension MainViewController: GifAPIDelegate {
-    func didUpdateData(postManager: GifAPI?, postGifData: GiphyResponse) {
-        guard let postManager = postManager else { return }
+    func didUpdateData(postGifData: GiphyResponse) {
         DispatchQueue.main.async { [weak self] in
-            postManager.modifyDataSource(with: postGifData.data)
+            self?.gifAPI.modifyDataSource(with: postGifData.data)
             self?.applySnapshot()
         }
     }

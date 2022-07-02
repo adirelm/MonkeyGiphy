@@ -17,7 +17,7 @@ class FullScreenGifViewController: UIViewController {
     private let image: UIImage
     private let data: Data
     private let gifURL: String
-    private let postManager = GifAPI.shared()
+    private let gifAPI = GifAPI.shared()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,8 +59,8 @@ class FullScreenGifViewController: UIViewController {
     }
     
     private func setUpFavoriteBtn() {
-        if postManager.favorites.contains(where: { url in
-            url == gifURL
+        if gifAPI.favorites.contains(where: { favoriteGif in
+            favoriteGif.url == gifURL
         }) {
             btnFavorite.setImage(UIImage(systemName: "star.fill"), for: .normal)
         }
@@ -105,7 +105,7 @@ class FullScreenGifViewController: UIViewController {
     }
     
     @IBAction func favoriteBtnClicked(_ sender: Any) {
-        postManager.modifyFavorites(with: gifURL)
+        gifAPI.modifyFavorites(with: FavoriteGif(data: self.data, url: self.gifURL))
         setUpFavoriteBtn()
     }
     
@@ -164,11 +164,11 @@ extension FullScreenGifViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let gifURLString = self.postManager.getRandomUrlFromDataSource(for: indexPath) else { return UICollectionViewCell() }
+        guard let gifURLString = self.gifAPI.getRandomUrlFromDataSource(for: indexPath) else { return UICollectionViewCell() }
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GifCollectionViewCell.identifier, for: indexPath) as? GifCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.configure(with: gifURLString, session: self.postManager.session)
+        cell.configure(with: gifURLString, session: self.gifAPI.session)
         return cell
     }
 }

@@ -13,8 +13,8 @@ class FavoritesViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var navBar: UINavigationItem!
-    private let gifAPI = GifAPI.shared()
     private var subscriptions = Set<AnyCancellable>()
+    private let gifAPI = GifAPI.shared()
     
     override func viewDidLoad() {
         setUpNavBar()
@@ -73,11 +73,11 @@ extension FavoritesViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let gifURLString = self.gifAPI.getGifUrlByIndexPathFromFavorites(for: indexPath) else { return UICollectionViewCell() }
+        guard let favoriteGifData = self.gifAPI.getFavoriteGif(for: indexPath) else { return UICollectionViewCell() }
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GifCollectionViewCell.identifier, for: indexPath) as? GifCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.configure(with: gifURLString, session: self.gifAPI.session)
+        cell.configureByData(favoriteGif: favoriteGifData)
         return cell
     }
 }

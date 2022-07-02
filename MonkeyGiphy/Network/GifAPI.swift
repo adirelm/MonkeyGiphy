@@ -13,7 +13,7 @@ enum ApiFetchType {
 }
 
 protocol GifAPIDelegate {
-    func didUpdateData(postManager: GifAPI?, postGifData: GiphyResponse )
+    func didUpdateData(postGifData: GiphyResponse )
     func handleScrollToTop()
 }
 
@@ -23,7 +23,7 @@ class GifAPI {
     var delegate: GifAPIDelegate?
     
     private(set) var data: [GifData] = []
-    @Published private(set) var favorites: [String] = []
+    @Published private(set) var favorites: [FavoriteGif] = []
     private(set) var isLoading = false
     
     lazy var session: URLSession = {
@@ -39,15 +39,15 @@ class GifAPI {
         return gifAPI
     }
     
-    func modifyFavorites(with url: String) {
-        let indexOfElement = self.favorites.firstIndex { gifURL in
-            gifURL == url
+    func modifyFavorites(with gif: FavoriteGif) {
+        let indexOfElement = self.favorites.firstIndex { favoriteGif in
+            favoriteGif.url == gif.url
         }
         
         if let indexOfElement = indexOfElement {
             self.favorites.remove(at: indexOfElement)
         } else {
-            self.favorites.append(url)
+            self.favorites.append(gif)
         }
     }
 
@@ -73,7 +73,7 @@ class GifAPI {
             }
             do {
                 let jsonResult = try JSONDecoder().decode(GiphyResponse.self, from: data)
-                self?.delegate?.didUpdateData(postManager: self, postGifData: jsonResult)
+                self?.delegate?.didUpdateData(postGifData: jsonResult)
                 if !isPagination { self?.delegate?.handleScrollToTop() }
             }
             catch {
@@ -96,7 +96,7 @@ class GifAPI {
             }
             do {
                 let jsonResult = try JSONDecoder().decode(GiphyResponse.self, from: data)
-                self?.delegate?.didUpdateData(postManager: self, postGifData: jsonResult)
+                self?.delegate?.didUpdateData(postGifData: jsonResult)
                 if !isPagination { self?.delegate?.handleScrollToTop() }
             }
             catch {
@@ -111,7 +111,7 @@ class GifAPI {
         return self.data[indexPath.row].images.downsized.url
     }
     
-    func getGifUrlByIndexPathFromFavorites(for indexPath: IndexPath) -> String? {
+    func getFavoriteGif(for indexPath: IndexPath) -> FavoriteGif? {
         guard indexPath.row <= favorites.count else { return nil }
         return self.favorites[indexPath.row]
     }
@@ -136,5 +136,4 @@ class GifAPI {
             return "https://api.giphy.com/v1/gifs/trending?api_key=\(apiKey)&offset=\(data.count)"
         }
     }
-    
 }

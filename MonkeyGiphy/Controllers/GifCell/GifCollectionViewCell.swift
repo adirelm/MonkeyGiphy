@@ -64,6 +64,13 @@ class GifCollectionViewCell: UICollectionViewCell {
         self.task = task
     }
     
+    func configureByData(favoriteGif: FavoriteGif) {
+        let gif = UIImage.gif(data: favoriteGif.data)
+        self.imageView.image = gif
+        self.gifURL = favoriteGif.url
+        self.data = favoriteGif.data
+    }
+    
     static func nib() -> UINib {
         return UINib(nibName: "GifCollectionViewCell", bundle: nil)
     }
